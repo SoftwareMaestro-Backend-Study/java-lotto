@@ -1,6 +1,8 @@
-package lotto.domain;
+package lotto.domain.lottorank;
 
 import java.util.Arrays;
+import lotto.domain.Lotto;
+import lotto.domain.WinNumbers;
 import lotto.domain.rankvalidator.RankValidator;
 
 public enum LottoRank {
@@ -25,5 +27,9 @@ public enum LottoRank {
                 .filter(rank -> rank.rankValidator.isRanked(winNumbers, lotto))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 일치하는 등수가 존재하지 않습니다"));
+    }
+
+    public int getPrize() {
+        return prize;
     }
 }

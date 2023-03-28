@@ -14,4 +14,12 @@ public class Money {
             throw new IllegalArgumentException(String.format("[ERROR] 금액은 %d원일 수 없습니다.", value));
         }
     }
+
+    public int getLottoCount() {
+        return this.value / MIN_VALUE;
+    }
+
+    public double getRateOfProfit(int profit) {
+        return (double) profit * 100 / value;
+    }
 }

@@ -2,6 +2,7 @@ package lotto.domain;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.stream.Collectors;
 import lotto.domain.lottonumbercreator.LottoNumberCreator;
 
 public class Lotto {
@@ -16,6 +17,10 @@ public class Lotto {
         validateDuplicated(numbers);
         validateNumbersRange(numbers);
         this.numbers = numbers;
+    }
+
+    public static Lotto from(LottoNumberCreator creator) {
+        return new Lotto(creator.create(MIN_LOTTO_NUMBER, MAX_LOTTO_NUMBER, LOTTO_NUMBERS_SIZE));
     }
 
     private void validateSize(List<Integer> numbers) {
@@ -38,10 +43,6 @@ public class Lotto {
         }
     }
 
-    public static Lotto from(LottoNumberCreator creator) {
-        return new Lotto(creator.create(MIN_LOTTO_NUMBER, MAX_LOTTO_NUMBER, LOTTO_NUMBERS_SIZE));
-    }
-
     public boolean isPossible(int bonusBall) {
         final boolean isInRange = bonusBall >= MIN_LOTTO_NUMBER && bonusBall <= MAX_LOTTO_NUMBER;
         final boolean isNotLottoNumber = !numbers.contains(bonusBall);
@@ -54,7 +55,7 @@ public class Lotto {
     }
 
     public boolean isThirdRank(Lotto lotto) {
-        return containCount(lotto) == LOTTO_NUMBERS_SIZE - 1 ;
+        return containCount(lotto) == LOTTO_NUMBERS_SIZE - 1;
     }
 
     public boolean isFourthRank(Lotto lotto) {
@@ -77,5 +78,14 @@ public class Lotto {
 
     public boolean contain(Integer number) {
         return this.numbers.contains(number);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("[%s]",
+                this.numbers.stream()
+                .sorted()
+                .map(number -> Integer.toString(number))
+                .collect(Collectors.joining(", ")));
     }
 }
