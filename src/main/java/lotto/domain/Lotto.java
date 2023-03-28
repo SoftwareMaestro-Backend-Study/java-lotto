@@ -1,26 +1,39 @@
 package lotto.domain;
 
+import java.util.HashSet;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Lotto {
     private static final int LOTTO_NUMBERS_SIZE = 6;
-    private final List<LottoNumber> numbers;
+    private static final int MIN_LOTTO_NUMBER = 1;
+    private static final int MAX_LOTTO_NUMBER = 45;
 
-    public Lotto(List<Integer> values) {
-        final List<LottoNumber> numbers = values.stream()
-                .map(LottoNumber::from)
-                .distinct()
-                .collect(Collectors.toList());
-        validate(numbers);
+    private final List<Integer> numbers;
+
+    public Lotto(List<Integer> numbers) {
+        validateSize(numbers);
+        validateDuplicated(numbers);
+        validateNumbersRange(numbers);
         this.numbers = numbers;
     }
 
-    private void validate(List<LottoNumber> numbers) {
+    private void validateSize(List<Integer> numbers) {
         if (numbers.size() != LOTTO_NUMBERS_SIZE) {
             throw new IllegalArgumentException(String.format("[ERROR] 로또 숫자의 개수는 %d일 수 없습니다.", numbers.size()));
         }
     }
 
-    // TODO: 추가 기능 구현
+    private void validateDuplicated(List<Integer> numbers) {
+        if (numbers.size() != new HashSet<>(numbers).size()) {
+            throw new IllegalArgumentException("[ERROR] 중복되는 숫자가 존재합니다.");
+        }
+    }
+
+    private void validateNumbersRange(List<Integer> numbers) {
+        if (numbers.stream().anyMatch(number -> number < MIN_LOTTO_NUMBER || number > MAX_LOTTO_NUMBER)) {
+            throw new IllegalArgumentException(
+                    String.format("[ERROR] %d ~ %d 범위를 넘어가는 숫자가 존재합니다.", MIN_LOTTO_NUMBER, MAX_LOTTO_NUMBER)
+            );
+        }
+    }
 }
