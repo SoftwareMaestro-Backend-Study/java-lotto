@@ -42,4 +42,11 @@ public class Lotto {
     public static Lotto from(LottoNumberCreator creator) {
         return new Lotto(creator.create(MIN_LOTTO_NUMBER, MAX_LOTTO_NUMBER, LOTTO_NUMBERS_SIZE));
     }
+
+    public boolean isPossible(Integer bonusBall) {
+        final boolean isInRange = bonusBall < MIN_LOTTO_NUMBER || bonusBall > MAX_LOTTO_NUMBER;
+        final boolean isNotLottoNumber = !numbers.contains(bonusBall);
+
+        return isInRange && isNotLottoNumber;
+    }
 }
