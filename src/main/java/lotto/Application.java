@@ -22,8 +22,8 @@ public class Application {
         final int lottoCount = money.getLottoCount();
         System.out.println(String.format("\n%d개를 구매했습니다.", lottoCount));
 
-        final List<Lotto> autoLottos = getAutoLottos(lottoCount);
-        autoLottos.forEach(System.out::println);
+        final List<Lotto> lottos = getAutoLottos(lottoCount);
+        lottos.forEach(System.out::println);
 
         System.out.println("\n당첨 번호를 입력해 주세요.");
         final Lotto winLotto = new Lotto(InputView.requestWinNumbers());
@@ -32,7 +32,7 @@ public class Application {
         int bonusBall = InputView.requestInteger();
 
         final WinNumbers winNumbers = new WinNumbers(winLotto, bonusBall);
-        final LottoRanks lottoRanks = getLottoRanks(autoLottos, winNumbers);
+        final LottoRanks lottoRanks = getLottoRanks(lottos, winNumbers);
 
         System.out.println("당첨 통계\n---");
         System.out.println(lottoRanks);
@@ -45,8 +45,8 @@ public class Application {
                 .collect(Collectors.toList());
     }
 
-    private static LottoRanks getLottoRanks(List<Lotto> autoLottos, WinNumbers winNumbers) {
-        final List<LottoRank> ranks = autoLottos.stream()
+    private static LottoRanks getLottoRanks(List<Lotto> lottos, WinNumbers winNumbers) {
+        final List<LottoRank> ranks = lottos.stream()
                 .map(lotto -> LottoRank.calculateRank(winNumbers, lotto))
                 .collect(Collectors.toList());
 
