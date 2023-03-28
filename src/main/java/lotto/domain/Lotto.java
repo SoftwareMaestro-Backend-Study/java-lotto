@@ -1,7 +1,9 @@
 package lotto.domain;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import lotto.domain.lottonumbercreator.LottoNumberCreator;
 
 public class Lotto {
     private static final int LOTTO_NUMBERS_SIZE = 6;
@@ -14,7 +16,7 @@ public class Lotto {
         validateSize(numbers);
         validateDuplicated(numbers);
         validateNumbersRange(numbers);
-        this.numbers = numbers;
+        this.numbers = new ArrayList<>(numbers);
     }
 
     private void validateSize(List<Integer> numbers) {
@@ -35,5 +37,9 @@ public class Lotto {
                     String.format("[ERROR] %d ~ %d 범위를 넘어가는 숫자가 존재합니다.", MIN_LOTTO_NUMBER, MAX_LOTTO_NUMBER)
             );
         }
+    }
+
+    public static Lotto from(LottoNumberCreator creator) {
+        return new Lotto(creator.create(MIN_LOTTO_NUMBER, MAX_LOTTO_NUMBER, LOTTO_NUMBERS_SIZE));
     }
 }

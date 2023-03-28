@@ -1,6 +1,7 @@
 package lotto.domain;
 
 import lotto.domain.Lotto;
+import lotto.domain.lottonumbercreator.LottoNumberCreator;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -9,6 +10,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class LottoTest {
@@ -35,5 +37,19 @@ class LottoTest {
         assertThatThrownBy(() -> new Lotto(List.of(n1, n2, n3, n4, n5, n6)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 1 ~ 45 범위를 넘어가는 숫자가 존재합니다.");
+    }
+
+    @Test
+    void 자동_로또를_생성한다() {
+        // given
+        final List<Integer> numbers = List.of(1, 2, 3, 4, 5, 6);
+        LottoNumberCreator creator = (min, max, size) -> numbers;
+
+        // when
+        final Lotto lotto = Lotto.from(creator);
+
+        // then
+        assertThat(lotto).extracting("numbers")
+                .isEqualTo(numbers);
     }
 }
