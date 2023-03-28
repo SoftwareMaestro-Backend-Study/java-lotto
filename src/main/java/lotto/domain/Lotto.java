@@ -1,6 +1,5 @@
 package lotto.domain;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import lotto.domain.lottonumbercreator.LottoNumberCreator;
@@ -16,7 +15,7 @@ public class Lotto {
         validateSize(numbers);
         validateDuplicated(numbers);
         validateNumbersRange(numbers);
-        this.numbers = new ArrayList<>(numbers);
+        this.numbers = numbers;
     }
 
     private void validateSize(List<Integer> numbers) {
@@ -43,10 +42,40 @@ public class Lotto {
         return new Lotto(creator.create(MIN_LOTTO_NUMBER, MAX_LOTTO_NUMBER, LOTTO_NUMBERS_SIZE));
     }
 
-    public boolean isPossible(Integer bonusBall) {
-        final boolean isInRange = bonusBall < MIN_LOTTO_NUMBER || bonusBall > MAX_LOTTO_NUMBER;
+    public boolean isPossible(int bonusBall) {
+        final boolean isInRange = bonusBall >= MIN_LOTTO_NUMBER && bonusBall <= MAX_LOTTO_NUMBER;
         final boolean isNotLottoNumber = !numbers.contains(bonusBall);
 
         return isInRange && isNotLottoNumber;
+    }
+
+    public boolean isFirstRank(Lotto lotto) {
+        return containCount(lotto) == LOTTO_NUMBERS_SIZE;
+    }
+
+    public boolean isThirdRank(Lotto lotto) {
+        return containCount(lotto) == LOTTO_NUMBERS_SIZE - 1 ;
+    }
+
+    public boolean isFourthRank(Lotto lotto) {
+        return containCount(lotto) == LOTTO_NUMBERS_SIZE - 2;
+    }
+
+    public boolean isFifthRank(Lotto lotto) {
+        return containCount(lotto) == LOTTO_NUMBERS_SIZE - 3;
+    }
+
+    public boolean isOutOfRank(Lotto lotto) {
+        return containCount(lotto) < LOTTO_NUMBERS_SIZE - 3;
+    }
+
+    private int containCount(Lotto other) {
+        return (int) other.numbers.stream()
+                .filter(this::contain)
+                .count();
+    }
+
+    public boolean contain(Integer number) {
+        return this.numbers.contains(number);
     }
 }
