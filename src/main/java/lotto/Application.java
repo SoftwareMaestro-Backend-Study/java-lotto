@@ -1,7 +1,12 @@
 package lotto;
 
+import lotto.service.LottoManager;
+import lotto.service.Manager;
+
 public class Application {
+
     public static void main(String[] args) {
-        // TODO: 프로그램 구현
+        Manager manager = new LottoManager();
+        manager.run();
     }
 }
