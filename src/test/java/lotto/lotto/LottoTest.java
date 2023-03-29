@@ -41,7 +41,7 @@ class LottoTest {
 
     @ParameterizedTest
     @DisplayName("comparePrize 동작 테스트")
-    @CsvSource(value = {"1:FIFTH", "2:FOURTH", "3:THIRD", "4:SECOND", "5:FIRST"}, delimiter = ':')
+    @CsvSource(value = {"0:FIFTH", "1:FOURTH", "2:THIRD", "3:SECOND", "4:FIRST"}, delimiter = ':')
     void comparePrize_동작(int testNum, String prizeName) {
         // given
         Lotto myLotto = new Lotto(testList.get(testNum));
@@ -58,9 +58,9 @@ class LottoTest {
     @ParameterizedTest
     @DisplayName("toString 동작 테스트")
     @CsvSource(value = {
-            "1:[1, 2, 3, 10, 11, 12]",
-            "2:[1, 2, 3, 4, 11, 12]",
-            "3:[1, 2, 3, 4, 5, 12]"
+            "0:[1, 2, 3, 10, 11, 12]",
+            "1:[1, 2, 3, 4, 11, 12]",
+            "2:[1, 2, 3, 4, 5, 12]"
     }, delimiter = ':')
     void toString_동작(int testNum, String expected) {
         // given
