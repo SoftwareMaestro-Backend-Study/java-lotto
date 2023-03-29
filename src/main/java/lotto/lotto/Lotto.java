@@ -1,33 +1,58 @@
 package lotto.lotto;
 
+import lotto.config.LottoConfig;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class Lotto {
     private final List<Integer> numbers;
-    private static final int LENGTH = 6;
 
     public Lotto(List<Integer> numbers) {
         validate(numbers);
+        numbers.sort(Comparator.naturalOrder());
         this.numbers = numbers;
     }
 
     private void validate(List<Integer> numbers) {
-        if (numbers.size() != LENGTH) {
-            throw new IllegalArgumentException();
-        }
+        if (numbers.size() != LottoConfig.LOTTO_NUM_LENGTH)
+            throw new IllegalArgumentException("[ERROR] 숫자의 개수가 올바르지 않습니다.");
+        if (numbers.size() != (new HashSet<>(numbers)).size())
+            throw new IllegalArgumentException("[ERROR] 숫자에 중복이 없어야 합니다.");
     }
 
-    // TODO: 추가 기능 구현
 
     public Prize comparePrize(Lotto winningLotto, int bonus) {
-        return null;
+        List<Integer> list = new ArrayList<>();
+        list.addAll(numbers);
+        list.addAll(winningLotto.numbers);
+        int matches = list.size() - (new HashSet<>(list)).size();
+        boolean isBonus = numbers.contains(bonus);
+
+        Prize prize = Prize.NONE;
+        for (Prize p : Prize.values()) {
+            if (
+                    p != Prize.NONE &&
+                    p.getMatchNum() <= matches &&
+                    p.getGrade() <= prize.getGrade()
+            ) {
+                if (p.isBonus() && !isBonus)
+                    continue;
+                prize = p;
+            }
+        }
+
+        return prize;
     }
 
     @Override
     public String toString() {
         return "[" +
-                numbers.stream().map(String::valueOf).collect(Collectors.joining(",")) +
+                numbers.stream().map(String::valueOf).collect(Collectors.joining(", ")) +
                 "]";
     }
+
 }
