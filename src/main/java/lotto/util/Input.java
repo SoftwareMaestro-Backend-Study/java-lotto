@@ -20,6 +20,11 @@ public class Input {
         return removeBlank(Console.readLine());
     }
 
+    public static String inputBonusNumber() {
+        System.out.println("\n보너스 번호를 입력해 주세요.");
+        return removeBlank(Console.readLine());
+    }
+
     private static String removeBlank(String input) {
         return input.replaceAll(BLANK, DELETE);
     }
