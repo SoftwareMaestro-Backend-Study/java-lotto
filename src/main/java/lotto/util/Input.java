@@ -15,6 +15,11 @@ public class Input {
         return removeBlank(Console.readLine());
     }
 
+    public static String inputWinningLotto() {
+        System.out.println("\n당첨 번호를 입력해 주세요.");
+        return removeBlank(Console.readLine());
+    }
+
     private static String removeBlank(String input) {
         return input.replaceAll(BLANK, DELETE);
     }
