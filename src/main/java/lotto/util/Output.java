@@ -16,4 +16,8 @@ public class Output {
                 .map(String::valueOf)
                 .forEach(System.out::println);
     }
+
+    public static void printWinningDetail(String winningDetail, double profitRate) {
+        System.out.printf("\n당첨 통계\n---\n%s\n총 수익률은 %.1f%%입니다.\n", winningDetail, profitRate);
+    }
 }
