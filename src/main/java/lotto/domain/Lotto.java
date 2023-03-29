@@ -4,6 +4,7 @@ import lotto.domain.generator.LottoGenerator;
 import lotto.domain.result.LottoResult;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 public class Lotto {
@@ -17,6 +18,7 @@ public class Lotto {
     public Lotto(List<Integer> numbers) {
         validateSize(numbers);
         validateRange(numbers);
+        validateDuplication(numbers);
         this.numbers = new ArrayList<>(numbers);
     }
 
@@ -74,5 +76,11 @@ public class Lotto {
 
     private boolean isNotInRange(int number) {
         return number < MIN_VALUE || number > MAX_VALUE;
+    }
+
+    private void validateDuplication(List<Integer> numbers) {
+        if (new HashSet<>(numbers).size() != THE_NUMBER_OF_LOTTO) {
+            throw new IllegalArgumentException("중복되는 번호가 포함되어 있습니다.");
+        }
     }
 }
