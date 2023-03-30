@@ -3,7 +3,6 @@ package lotto.domain.lottorank;
 import java.util.Arrays;
 import lotto.domain.Lotto;
 import lotto.domain.WinNumbers;
-import lotto.domain.rankvalidator.RankValidator;
 
 public enum LottoRank {
     FIRST(2_000_000_000, 6, false),
@@ -32,7 +31,13 @@ public enum LottoRank {
                 .orElse(LottoRank.OTHER);
     }
 
+
     public int getPrize() {
         return prize;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%d개 일치%s (%,d원)", this.count, this.bonus ? ", 보너스 볼 일치" : "", this.prize);
     }
 }

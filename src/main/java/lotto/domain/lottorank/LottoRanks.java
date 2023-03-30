@@ -1,15 +1,10 @@
 package lotto.domain.lottorank;
 
-import static lotto.domain.lottorank.LottoRank.FIFTH;
-import static lotto.domain.lottorank.LottoRank.FIRST;
-import static lotto.domain.lottorank.LottoRank.FOURTH;
-import static lotto.domain.lottorank.LottoRank.SECOND;
-import static lotto.domain.lottorank.LottoRank.THIRD;
-
 import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class LottoRanks {
 
@@ -36,10 +31,9 @@ public class LottoRanks {
 
     @Override
     public String toString() {
-        return String.format("3개 일치 (%,d원) - %d개\n", FIFTH.getPrize(), ranks.get(FIFTH))
-                + String.format("4개 일치 (%,d원) - %d개\n", FOURTH.getPrize(), ranks.get(FOURTH))
-                + String.format("5개 일치 (%,d원) - %d개\n", THIRD.getPrize(), ranks.get(THIRD))
-                + String.format("5개 일치, 보너스 볼 일치 (%,d원) - %d개\n", SECOND.getPrize(), ranks.get(SECOND))
-                + String.format("6개 일치 (%,d원) - %d개\n", FIRST.getPrize(), ranks.get(FIRST));
+        return ranks.entrySet()
+                .stream()
+                .map(entry -> String.format("%s - %d개", entry.getKey().toString(), entry.getValue()))
+                .collect(Collectors.joining("\n"));
     }
 }
