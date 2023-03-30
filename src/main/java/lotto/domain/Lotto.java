@@ -54,27 +54,7 @@ public class Lotto {
         return isInRange && isNotLottoNumber;
     }
 
-    public boolean isFirstRank(Lotto lotto) {
-        return containCount(lotto) == LOTTO_NUMBERS_SIZE;
-    }
-
-    public boolean isThirdRank(Lotto lotto) {
-        return containCount(lotto) == LOTTO_NUMBERS_SIZE - 1;
-    }
-
-    public boolean isFourthRank(Lotto lotto) {
-        return containCount(lotto) == LOTTO_NUMBERS_SIZE - 2;
-    }
-
-    public boolean isFifthRank(Lotto lotto) {
-        return containCount(lotto) == LOTTO_NUMBERS_SIZE - 3;
-    }
-
-    public boolean isOutOfRank(Lotto lotto) {
-        return containCount(lotto) < LOTTO_NUMBERS_SIZE - 3;
-    }
-
-    private int containCount(Lotto other) {
+    public int calculateSameLottoNumber(Lotto other) {
         return (int) other.numbers.stream()
                 .filter(this::contain)
                 .count();

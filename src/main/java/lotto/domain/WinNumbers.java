@@ -18,27 +18,11 @@ public class WinNumbers {
         }
     }
 
-    public boolean isFirstRank(Lotto other) {
-        return this.lotto.isFirstRank(other);
+    public int calculateSameLottoNumber(Lotto lotto) {
+        return this.lotto.calculateSameLottoNumber(lotto);
     }
 
-    public boolean isSecondRank(Lotto other) {
-        return this.lotto.isThirdRank(other) && other.contain(this.bonusBall);
-    }
-
-    public boolean isThirdRank(Lotto other) {
-        return this.lotto.isThirdRank(other) && !other.contain(this.bonusBall);
-    }
-
-    public boolean isFourthRank(Lotto other) {
-        return this.lotto.isFourthRank(other);
-    }
-
-    public boolean isFifthRank(Lotto other) {
-        return this.lotto.isFifthRank(other);
-    }
-
-    public boolean isOutOfRank(Lotto other) {
-        return this.lotto.isOutOfRank(other);
+    public boolean matchBonus(Lotto lotto) {
+        return lotto.contain(bonusBall);
     }
 }
