@@ -1,11 +1,9 @@
 package lotto.lotto;
 
-import javafx.scene.input.DataFormat;
 import lotto.purchase.PurchaseService;
 import lotto.util.LottoUtil;
 import lotto.util.UserOutput;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +24,7 @@ public class LottoBundle {
     }
 
     /**
-     * 당첨번호 입력받기
+     * 당첨번호 저장하기
      */
     public void setWinningLotto(List<Integer> winningNumList) {
         Lotto lotto = new Lotto(winningNumList);
@@ -34,9 +32,10 @@ public class LottoBundle {
     }
 
     /**
-     * 보너스번호 입력받기
+     * 보너스번호 저장하기
      */
     public void setBonus(int bonus) {
+        //todo: 보너스랑 당첨번호 겹치면 안됨!!
         this.bonus = bonus;
     }
 
@@ -62,7 +61,7 @@ public class LottoBundle {
 
         StringBuilder sb = new StringBuilder();
         for (Prize prize : Prize.values()){
-            if (prize == Prize.NONE) continue;
+            if (!prize.isPrized()) continue;
             sb.append(prize.getToString());
             sb.append(
                     String.format(" (%,d원) - %d개",
@@ -80,7 +79,7 @@ public class LottoBundle {
         int[] prizeStat = new int[Prize.values().length];
         for (Lotto lotto : lottos) {
             Prize prize = lotto.comparePrize(winningLotto, bonus);
-            if (prize != Prize.NONE)
+            if (prize.isPrized())
                 prizeStat[prize.ordinal()]++;
         }
         return prizeStat;

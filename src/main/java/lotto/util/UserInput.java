@@ -2,8 +2,6 @@ package lotto.util;
 
 import camp.nextstep.edu.missionutils.Console;
 
-import java.util.Scanner;
-
 public class UserInput {
 
     private UserInput() {
