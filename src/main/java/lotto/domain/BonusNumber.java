@@ -1,7 +1,5 @@
 package lotto.domain;
 
-import lotto.util.Convertor;
-
 public class BonusNumber {
 
     private final int number;
