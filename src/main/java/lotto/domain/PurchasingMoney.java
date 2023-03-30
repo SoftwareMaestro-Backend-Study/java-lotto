@@ -1,7 +1,5 @@
 package lotto.domain;
 
-import lotto.util.Convertor;
-
 public class PurchasingMoney {
 
     private static final int UNIT = 1000;
@@ -10,6 +8,7 @@ public class PurchasingMoney {
     private final int quantity;
 
     private PurchasingMoney(int money) {
+        validatePositive(money);
         validateUnit(money);
         this.money = money;
         this.quantity = money / UNIT;
@@ -25,6 +24,12 @@ public class PurchasingMoney {
 
     public int getQuantity() {
         return quantity;
+    }
+
+    private void validatePositive(int money) {
+        if (money <= 0) {
+            throw new IllegalArgumentException("[ERROR] 구입금액은 양수여야 합니다.");
+        }
     }
 
     private void validateUnit(int money) {
