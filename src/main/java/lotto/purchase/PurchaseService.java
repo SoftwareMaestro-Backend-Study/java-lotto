@@ -19,6 +19,9 @@ public class PurchaseService {
         return cost / PRICE_PER_LOTTO;
     }
 
+    /**
+     * 총 로또 수익률을 퍼센트 단위로 반환
+     */
     public static double getRewardPercent(int num, int reward){
         return (double) reward / (num * PRICE_PER_LOTTO) * 100;
     }
