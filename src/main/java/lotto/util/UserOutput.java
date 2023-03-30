@@ -13,7 +13,7 @@ public class UserOutput {
 
     public static void printResult(String resultStr){
         System.out.println( "당첨 통계\n" +
-                "---\n");
+                "---");
         System.out.println(resultStr);
     }
 
