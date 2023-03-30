@@ -20,7 +20,7 @@ public class LottoManager implements Manager {
         Lottos issuedLottos = purchaseLotto(purchasingMoney);
 
         Lotto winningLotto = Lotto.from(WinningLottoGenerator.from(Input.inputWinningLotto()));
-        BonusNumber bonusNumber = BonusNumber.from(winningLotto, Input.inputBonusNumber());
+        BonusNumber bonusNumber = BonusNumber.from(winningLotto, Convertor.toInteger(Input.inputBonusNumber()));
 
         compareLotto(purchasingMoney, issuedLottos, winningLotto, bonusNumber);
     }

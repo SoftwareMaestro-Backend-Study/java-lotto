@@ -10,8 +10,7 @@ public class BonusNumber {
         this.number = number;
     }
 
-    public static BonusNumber from(Lotto lotto, String input) {
-        int number = Convertor.toInteger(input);
+    public static BonusNumber from(Lotto lotto, int number) {
         lotto.validateRange(number);
         lotto.validateDuplication(number);
         return new BonusNumber(number);
