@@ -7,11 +7,13 @@ import java.util.stream.Collectors;
 
 public class IssuedLottoGenerator implements LottoGenerator {
 
+    private static final LottoGenerator ISSUED_LOTTO_GENERATOR = new IssuedLottoGenerator();
+
     private IssuedLottoGenerator() {
     }
 
-    public static IssuedLottoGenerator create() {
-        return new IssuedLottoGenerator();
+    public static LottoGenerator create() {
+        return ISSUED_LOTTO_GENERATOR;
     }
 
     @Override
