@@ -16,12 +16,12 @@ public class LottoManager implements Manager {
     @Override
     public void run() {
         PurchasingMoney purchasingMoney = PurchasingMoney.from(Input.inputPurchasingMoney());
-        Lottos issuedLotto = purchaseLotto(purchasingMoney);
+        Lottos issuedLottos = purchaseLotto(purchasingMoney);
 
         Lotto winningLotto = Lotto.from(WinningLottoGenerator.from(Input.inputWinningLotto()));
         BonusNumber bonusNumber = BonusNumber.from(winningLotto, Input.inputBonusNumber());
 
-        compareLotto(purchasingMoney, issuedLotto, winningLotto, bonusNumber);
+        compareLotto(purchasingMoney, issuedLottos, winningLotto, bonusNumber);
     }
 
     private Lottos purchaseLotto(PurchasingMoney purchasingMoney) {
