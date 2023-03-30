@@ -15,8 +15,8 @@ public class PurchasingMoney {
         this.quantity = money / UNIT;
     }
 
-    public static PurchasingMoney from(String input) {
-        return new PurchasingMoney(Convertor.toInteger(input));
+    public static PurchasingMoney from(int money) {
+        return new PurchasingMoney(money);
     }
 
     public int getMoney() {

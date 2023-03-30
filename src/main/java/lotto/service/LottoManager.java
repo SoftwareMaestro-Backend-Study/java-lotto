@@ -8,6 +8,7 @@ import lotto.domain.generator.IssuedLottoGenerator;
 import lotto.domain.generator.WinningLottoGenerator;
 import lotto.domain.result.ProfitRate;
 import lotto.domain.result.WinningDetail;
+import lotto.util.Convertor;
 import lotto.util.Input;
 import lotto.util.Output;
 
@@ -15,7 +16,7 @@ public class LottoManager implements Manager {
 
     @Override
     public void run() {
-        PurchasingMoney purchasingMoney = PurchasingMoney.from(Input.inputPurchasingMoney());
+        PurchasingMoney purchasingMoney = PurchasingMoney.from(Convertor.toInteger(Input.inputPurchasingMoney()));
         Lottos issuedLottos = purchaseLotto(purchasingMoney);
 
         Lotto winningLotto = Lotto.from(WinningLottoGenerator.from(Input.inputWinningLotto()));
