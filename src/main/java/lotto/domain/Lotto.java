@@ -36,15 +36,19 @@ public class Lotto {
     }
 
     private void validateNumbersRange(List<Integer> numbers) {
-        if (numbers.stream().anyMatch(number -> number < MIN_LOTTO_NUMBER || number > MAX_LOTTO_NUMBER)) {
+        if (!numbers.stream().allMatch(this::isInRange)) {
             throw new IllegalArgumentException(
                     String.format("[ERROR] %d ~ %d 범위를 넘어가는 숫자가 존재합니다.", MIN_LOTTO_NUMBER, MAX_LOTTO_NUMBER)
             );
         }
     }
 
+    private boolean isInRange(int bonusBall) {
+        return bonusBall >= MIN_LOTTO_NUMBER && bonusBall <= MAX_LOTTO_NUMBER;
+    }
+
     public boolean isPossible(int bonusBall) {
-        final boolean isInRange = bonusBall >= MIN_LOTTO_NUMBER && bonusBall <= MAX_LOTTO_NUMBER;
+        final boolean isInRange = isInRange(bonusBall);
         final boolean isNotLottoNumber = !numbers.contains(bonusBall);
 
         return isInRange && isNotLottoNumber;
