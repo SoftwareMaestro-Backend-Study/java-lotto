@@ -14,7 +14,7 @@ class LottoServiceTest {
 
     @ParameterizedTest
     @DisplayName("getNumList 동작 테스트")
-    @CsvSource(value = {"1,1","2,2","3,3","4,4"}, delimiter = ':')
+    @CsvSource(value = {"1,1","2,2","3,3","4,4"}, delimiter = ',')
     void getNum_동작(String input, int expected) {
         // given
         LottoService lottoService = new LottoService();
@@ -43,7 +43,7 @@ class LottoServiceTest {
         // given
         LottoService lottoService = new LottoService();
         // when & then
-        assertThatThrownBy(()->lottoService.getNumList(input))
+        assertThatCode(()->lottoService.getNumList(input))
                 .doesNotThrowAnyException();
     }
 
