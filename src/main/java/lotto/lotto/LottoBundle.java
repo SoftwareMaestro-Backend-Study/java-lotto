@@ -35,7 +35,9 @@ public class LottoBundle {
      * 보너스번호 저장하기
      */
     public void setBonus(int bonus) {
-        //todo: 보너스랑 당첨번호 겹치면 안됨!!
+        if (winningLotto.contains(bonus)) {
+            throw new IllegalArgumentException("[ERROR] 보너스 번호와 당첨 번호에 중복이 있습니다.");
+        }
         this.bonus = bonus;
     }
 
