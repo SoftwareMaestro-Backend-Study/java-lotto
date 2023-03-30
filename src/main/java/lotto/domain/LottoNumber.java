@@ -3,6 +3,7 @@ package lotto.domain;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import lotto.domain.picker.Picker;
 
 public class LottoNumber {
     private static final int MIN_VALUE = 1;
@@ -19,6 +20,10 @@ public class LottoNumber {
 
     private LottoNumber(int value) {
         this.value = value;
+    }
+
+    public static LottoNumber pick(Picker<Integer> picker) {
+        return LottoNumber.from(picker.pick(MIN_VALUE, MAX_VALUE));
     }
 
     public static LottoNumber from(int value) {
