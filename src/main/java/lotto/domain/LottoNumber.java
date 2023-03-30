@@ -22,7 +22,7 @@ public class LottoNumber {
         this.value = value;
     }
 
-    public static LottoNumber pick(Picker<Integer> picker) {
+    public static LottoNumber pick(Picker picker) {
         return LottoNumber.from(picker.pick(MIN_VALUE, MAX_VALUE));
     }
 

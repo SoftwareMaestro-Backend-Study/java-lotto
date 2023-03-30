@@ -1,5 +1,5 @@
 package lotto.domain.picker;
 
-public interface Picker<T> {
-    T pick(T minValue, T maxValue);
+public interface Picker {
+    int pick(int minValue, int maxValue);
 }
