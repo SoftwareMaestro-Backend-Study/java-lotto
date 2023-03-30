@@ -8,6 +8,10 @@ import java.util.stream.Collectors;
 public class InputView {
     private static final String DELIMITER = ",";
 
+    private InputView() {
+        throw new UnsupportedOperationException();
+    }
+
     public static int requestInteger() {
         final String input = Console.readLine();
         return parseInt(input);
