@@ -13,7 +13,11 @@ public class Lotto {
 
     public Lotto(List<Integer> numbers) {
         validate(numbers);
-        numbers.sort(Comparator.naturalOrder());
+
+        try {
+            numbers.sort(Comparator.naturalOrder());
+        } catch (UnsupportedOperationException ignored) {}
+
         this.numbers = numbers;
     }
 
@@ -35,16 +39,15 @@ public class Lotto {
         Prize prize = Prize.NONE;
         for (Prize p : Prize.values()) {
             if (
-                    p != Prize.NONE &&
+                    p.isPrized() &&
                     p.getMatchNum() <= matches &&
                     p.getGrade() <= prize.getGrade()
             ) {
-                if (p.isBonus() && !isBonus)
+                if (p.isBonus() && !isBonus) // 보너스 true인 경우 isBonus 확인한다.
                     continue;
                 prize = p;
             }
         }
-
         return prize;
     }
 
