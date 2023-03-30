@@ -48,12 +48,16 @@ public class LottoService {
     }
 
     public List<Integer> getNumList(String input) {
-
         List<String> strList = new ArrayList<>(
                 Arrays.asList(
                         input.split(",")
                 )
         );
+
+        // "," 개수를 이용해서 배열의 길이가 올바르게 입력되었는지 확인한다.
+        int commas = input.length() - input.replace(String.valueOf(","), "").length();
+        if (commas+1 != strList.size())
+            throw new IllegalArgumentException("[ERROR] 정수와 ,로 이루어진 배열을 입력해주세요.");
 
         List<Integer> numList = strList.stream()
                 .map(s -> {
