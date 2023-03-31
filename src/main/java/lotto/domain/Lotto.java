@@ -66,12 +66,13 @@ public class Lotto {
     }
 
     private void validateRange(List<Integer> numbers) {
-        numbers.stream()
-                .filter(this::isNotInRange)
-                .findAny()
-                .ifPresent(number -> {
-                    throw new IllegalArgumentException(String.format("[ERROR] 로또 번호는 %d부터 %d 사이의 숫자여야 합니다.", MIN_VALUE, MAX_VALUE));
-                });
+        if (hasNumberOutOfRange(numbers)) {
+            throw new IllegalArgumentException(String.format("[ERROR] 로또 번호는 %d부터 %d 사이의 숫자여야 합니다.", MIN_VALUE, MAX_VALUE));
+        }
+    }
+
+    private boolean hasNumberOutOfRange(List<Integer> numbers) {
+        return numbers.stream().anyMatch(this::isNotInRange);
     }
 
     private boolean isNotInRange(int number) {
