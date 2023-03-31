@@ -11,11 +11,9 @@ import java.util.stream.Stream;
 public class Lottos {
 
     private final List<Lotto> lottos;
-    private final int quantity;
 
     public Lottos(List<Lotto> lottos) {
         this.lottos = new ArrayList<>(lottos);
-        this.quantity = lottos.size();
     }
 
     public static Lottos from(LottoGenerator lottoGenerator, PurchasingMoney purchasingMoney) {
@@ -35,6 +33,6 @@ public class Lottos {
     }
 
     public int getQuantity() {
-        return quantity;
+        return lottos.size();
     }
 }
