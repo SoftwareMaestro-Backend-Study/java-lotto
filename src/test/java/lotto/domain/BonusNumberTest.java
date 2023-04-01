@@ -2,6 +2,7 @@ package lotto.domain;
 
 import lotto.domain.generator.LottoGenerator;
 import lotto.domain.generator.WinningLottoGenerator;
+import lotto.util.Convertor;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -17,7 +18,7 @@ public class BonusNumberTest {
         LottoGenerator winningLottoGenerator = WinningLottoGenerator.from("1,2,3,4,5,6");
         Lotto lotto = Lotto.from(winningLottoGenerator);
         // when & then
-        assertThatCode(() -> BonusNumber.from(lotto, input))
+        assertThatCode(() -> BonusNumber.from(lotto, Convertor.toInteger(input)))
                 .doesNotThrowAnyException();
     }
 
@@ -28,7 +29,7 @@ public class BonusNumberTest {
         LottoGenerator winningLottoGenerator = WinningLottoGenerator.from("1,2,3,4,5,6");
         Lotto lotto = Lotto.from(winningLottoGenerator);
         // when & then
-        assertThatThrownBy(() -> BonusNumber.from(lotto, input))
+        assertThatThrownBy(() -> BonusNumber.from(lotto, Convertor.toInteger(input)))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }
