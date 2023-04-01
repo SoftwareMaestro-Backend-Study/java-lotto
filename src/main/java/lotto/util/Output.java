@@ -2,6 +2,8 @@ package lotto.util;
 
 import lotto.domain.Lotto;
 import lotto.domain.Lottos;
+import lotto.domain.result.ProfitRate;
+import lotto.domain.result.WinningDetail;
 
 public class Output {
 
@@ -17,7 +19,9 @@ public class Output {
                 .forEach(System.out::println);
     }
 
-    public static void printWinningDetail(String winningDetail, double profitRate) {
-        System.out.printf("\n당첨 통계\n---\n%s\n총 수익률은 %.1f%%입니다.\n", winningDetail, profitRate);
+    public static void printWinningDetail(WinningDetail winningDetail, ProfitRate profitRate) {
+        System.out.println("\n당첨 통계\n---\n" +
+                winningDetail +
+                String.format("\n총 수익률은 %s%%입니다.\n", profitRate));
     }
 }
