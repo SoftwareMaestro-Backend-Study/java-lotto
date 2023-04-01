@@ -17,14 +17,11 @@ public class WinningDetail {
         return new WinningDetail(lottoResultMap);
     }
 
-    public String getResult() {
-        StringBuilder detail = new StringBuilder();
-        detail.append(String.format("%s (%s원) - %d개\n", LottoResult.FIFTH_PRIZE.getMessage(), DECIMAL_FORMAT.format(LottoResult.FIFTH_PRIZE.getPrize()), fifthPrize))
-                .append(String.format("%s (%s원) - %d개\n", LottoResult.FOURTH_PRIZE.getMessage(), DECIMAL_FORMAT.format(LottoResult.FOURTH_PRIZE.getPrize()), fourthPrize))
-                .append(String.format("%s (%s원) - %d개\n", LottoResult.THIRD_PRIZE.getMessage(), DECIMAL_FORMAT.format(LottoResult.THIRD_PRIZE.getPrize()), thirdPrize))
-                .append(String.format("%s (%s원) - %d개\n", LottoResult.SECOND_PRIZE.getMessage(), DECIMAL_FORMAT.format(LottoResult.SECOND_PRIZE.getPrize()), secondPrize))
-                .append(String.format("%s (%s원) - %d개\n", LottoResult.FIRST_PRIZE.getMessage(), DECIMAL_FORMAT.format(LottoResult.FIRST_PRIZE.getPrize()), firstPrize));
-        return detail.toString();
+    public int getTotalPrize() {
+        return lottoResults.entrySet()
+                .stream()
+                .mapToInt(lottoResult -> lottoResult.getKey().getPrize() * lottoResult.getValue())
+                .sum();
     }
 
     private static Map<LottoResult, Integer> getLottoResultMap() {
