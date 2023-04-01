@@ -4,34 +4,31 @@ import java.util.Arrays;
 
 public enum LottoResult {
 
-    FIRST_PRIZE(6, 0, 2000000000, "6개 일치"),
-    SECOND_PRIZE(5, 1, 30000000, "5개 일치, 보너스 볼 일치"),
-    THIRD_PRIZE(5, 0, 1500000, "5개 일치"),
-    FOURTH_PRIZE(4, 0, 50000, "4개 일치"),
-    FIFTH_PRIZE(3, 0, 5000, "3개 일치"),
-    NO_PRIZE(0, 0, 0, "");
+    FIRST_PRIZE(6, false, 2000000000, "6개 일치"),
+    SECOND_PRIZE(5, true, 30000000, "5개 일치, 보너스 볼 일치"),
+    THIRD_PRIZE(5, false, 1500000, "5개 일치"),
+    FOURTH_PRIZE(4, false, 50000, "4개 일치"),
+    FIFTH_PRIZE(3, false, 5000, "3개 일치"),
+    NO_PRIZE(0, false, 0, "");
 
     private final int matchingNumber;
-    private final int matchingNumberWithBonusNumber;
+    private final boolean hasBonusNumber;
     private final int prize;
     private final String message;
 
-    LottoResult(int matchingNumber, int matchingNumberWithBonusNumber, int prize, String message) {
+    LottoResult(int matchingNumber, boolean hasBonusNumber, int prize, String message) {
         this.matchingNumber = matchingNumber;
-        this.matchingNumberWithBonusNumber = matchingNumberWithBonusNumber;
+        this.hasBonusNumber = hasBonusNumber;
         this.prize = prize;
         this.message = message;
     }
 
-    public static LottoResult find(int matchingNumber, int matchingNumberWithBonusNumber) {
+    public static LottoResult find(int matchingNumber, boolean hasBonusNumber) {
         return Arrays.stream(values())
-                .filter(value -> value.matchingNumber == matchingNumber && value.matchingNumberWithBonusNumber <= matchingNumberWithBonusNumber)
+                .filter(value -> value.matchingNumber == matchingNumber)
+                .filter(value -> !value.hasBonusNumber || hasBonusNumber)
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 로또에 대한 결과가 없습니다."));
-    }
-
-    public int getMatchingNumber() {
-        return matchingNumber;
+                .orElse(NO_PRIZE);
     }
 
     public int getPrize() {

@@ -46,13 +46,7 @@ public class Lotto {
         int matchingNumber = (int) numbers.stream()
                 .filter(other::contains)
                 .count();
-        if (matchingNumber < LottoResult.FIFTH_PRIZE.getMatchingNumber()) {
-            return LottoResult.NO_PRIZE;
-        }
-        int matchingNumberWithBonusNumber = (int) numbers.stream()
-                .filter(number -> number == bonusNumber.getNumber())
-                .count();
-        return LottoResult.find(matchingNumber, matchingNumberWithBonusNumber);
+        return LottoResult.find(matchingNumber, numbers.contains(bonusNumber.getNumber()));
     }
 
     public List<Integer> getNumbers() {
