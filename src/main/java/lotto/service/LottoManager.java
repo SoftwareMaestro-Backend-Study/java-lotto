@@ -26,7 +26,7 @@ public class LottoManager implements Manager {
     }
 
     private Lottos purchaseLotto(PurchasingMoney purchasingMoney) {
-        Lottos issuedLotto = Lottos.from(IssuedLottoGenerator.create(), purchasingMoney);
+        Lottos issuedLotto = Lottos.from(IssuedLottoGenerator.create(), purchasingMoney.getQuantity());
         Output.printIssuedLotto(issuedLotto);
         return issuedLotto;
     }

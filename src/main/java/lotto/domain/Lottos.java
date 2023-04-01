@@ -16,9 +16,9 @@ public class Lottos {
         this.lottos = new ArrayList<>(lottos);
     }
 
-    public static Lottos from(LottoGenerator lottoGenerator, PurchasingMoney purchasingMoney) {
+    public static Lottos from(LottoGenerator lottoGenerator, int quantity) {
         return new Lottos(Stream.generate(() -> Lotto.from(lottoGenerator))
-                .limit(purchasingMoney.getQuantity())
+                .limit(quantity)
                 .collect(Collectors.toList()));
     }
 
