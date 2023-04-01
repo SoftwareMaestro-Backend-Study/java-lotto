@@ -5,13 +5,11 @@ public class PurchasingMoney {
     private static final int UNIT = 1000;
 
     private final int money;
-    private final int quantity;
 
     private PurchasingMoney(int money) {
         validatePositive(money);
         validateUnit(money);
         this.money = money;
-        this.quantity = money / UNIT;
     }
 
     public static PurchasingMoney from(int money) {
@@ -23,7 +21,7 @@ public class PurchasingMoney {
     }
 
     public int getQuantity() {
-        return quantity;
+        return money / UNIT;
     }
 
     private void validatePositive(int money) {
