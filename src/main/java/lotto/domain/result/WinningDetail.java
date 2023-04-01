@@ -24,6 +24,16 @@ public class WinningDetail {
                 .sum();
     }
 
+    @Override
+    public String toString() {
+        return lottoResults.entrySet()
+                .stream()
+                .filter(lottoResult -> lottoResult.getKey() != LottoResult.NO_PRIZE)
+                .sorted(Comparator.comparing(lottoResult -> lottoResult.getKey().getPrize()))
+                .map(lottoResult -> String.format("%s - %d개", lottoResult.getKey(), lottoResult.getValue()))
+                .collect(Collectors.joining("\n"));
+    }
+
     private static Map<LottoResult, Integer> getLottoResultMap() {
         Map<LottoResult, Integer> lottoResultCounts = new EnumMap<>(LottoResult.class);
         Arrays.stream(LottoResult.values())
