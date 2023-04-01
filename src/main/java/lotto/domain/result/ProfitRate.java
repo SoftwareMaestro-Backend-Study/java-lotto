@@ -12,7 +12,8 @@ public class ProfitRate {
         return new ProfitRate(((double) prize / purchasingMoney) * 100);
     }
 
-    public double getValue() {
-        return value;
+    @Override
+    public String toString() {
+        return String.format("%.1f", value);
     }
 }
