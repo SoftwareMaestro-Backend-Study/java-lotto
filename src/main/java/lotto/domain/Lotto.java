@@ -26,10 +26,6 @@ public class Lotto {
         return new Lotto(lottoGenerator.issue(MIN_VALUE, MAX_VALUE, THE_NUMBER_OF_LOTTO));
     }
 
-    public List<LottoResult> compare(Lottos issuedLotto, BonusNumber bonusNumber) {
-        return issuedLotto.compare(numbers, bonusNumber);
-    }
-
     public void validateDuplication(int bonusNumber) {
         if (numbers.contains(bonusNumber)) {
             throw new IllegalArgumentException(String.format("[ERROR] %d는 당첨 번호와 중복됩니다.", bonusNumber));
@@ -42,11 +38,8 @@ public class Lotto {
         }
     }
 
-    public LottoResult getResult(List<Integer> other, BonusNumber bonusNumber) {
-        int matchingNumber = (int) numbers.stream()
-                .filter(other::contains)
-                .count();
-        return LottoResult.find(matchingNumber, numbers.contains(bonusNumber.getNumber()));
+    public LottoResult getResult(Lotto other, int bonusNumber) {
+        return LottoResult.find(getMatchingNumber(other), numbers.contains(bonusNumber));
     }
 
     public List<Integer> getNumbers() {
@@ -77,5 +70,11 @@ public class Lotto {
         if (new HashSet<>(numbers).size() != THE_NUMBER_OF_LOTTO) {
             throw new IllegalArgumentException("중복되는 번호가 포함되어 있습니다.");
         }
+    }
+
+    private int getMatchingNumber(Lotto other) {
+        return (int) numbers.stream()
+                .filter(other.numbers::contains)
+                .count();
     }
 }

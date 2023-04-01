@@ -32,7 +32,7 @@ public class LottoManager implements Manager {
     }
 
     private void compareLotto(PurchasingMoney purchasingMoney, Lottos issuedLotto, Lotto winningLotto, BonusNumber bonusNumber) {
-        WinningDetail winningDetail = WinningDetail.from(winningLotto.compare(issuedLotto, bonusNumber));
+        WinningDetail winningDetail = WinningDetail.from(issuedLotto.compare(winningLotto, bonusNumber.getNumber()));
         ProfitRate profitRate = ProfitRate.from(winningDetail.getTotalPrize(), purchasingMoney.getMoney());
         Output.printWinningDetail(winningDetail.getResult(), profitRate.getValue());
     }

@@ -22,7 +22,7 @@ public class Lottos {
                 .collect(Collectors.toList()));
     }
 
-    public List<LottoResult> compare(List<Integer> winningLotto, BonusNumber bonusNumber) {
+    public List<LottoResult> compare(Lotto winningLotto, int bonusNumber) {
         return lottos.stream()
                 .map(lotto -> lotto.getResult(winningLotto, bonusNumber))
                 .collect(Collectors.toList());
