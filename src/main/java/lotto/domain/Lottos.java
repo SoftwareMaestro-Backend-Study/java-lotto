@@ -31,8 +31,4 @@ public class Lottos {
     public List<Lotto> getLottos() {
         return lottos;
     }
-
-    public int getQuantity() {
-        return lottos.size();
-    }
 }
