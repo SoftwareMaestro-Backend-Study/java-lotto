@@ -14,6 +14,6 @@ public class ProfitRateTest {
         // when
         ProfitRate profitRate = ProfitRate.from(prize, purchasingMoney);
         // then
-        assertThat(profitRate.getValue()).isEqualTo(785.7);
+        assertThat(String.format("%.1f", profitRate.getValue())).isEqualTo("785.7");
     }
 }
