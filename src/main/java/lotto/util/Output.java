@@ -10,8 +10,8 @@ public class Output {
     private Output() {
     }
 
-    public static void printIssuedLotto(Lottos issuedLotto) {
-        System.out.printf("\n%d개를 구매했습니다.%n", issuedLotto.getQuantity());
+    public static void printIssuedLotto(Lottos issuedLotto, int quantity) {
+        System.out.printf("\n%d개를 구매했습니다.%n", quantity);
         issuedLotto.getLottos()
                 .stream()
                 .map(Lotto::getNumbers)
