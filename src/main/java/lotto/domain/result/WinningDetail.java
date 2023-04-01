@@ -1,36 +1,20 @@
 package lotto.domain.result;
 
-import java.text.DecimalFormat;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class WinningDetail {
 
-    private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("###,###");
+    private final Map<LottoResult, Integer> lottoResults;
 
-    private final int firstPrize;
-    private final int secondPrize;
-    private final int thirdPrize;
-    private final int fourthPrize;
-    private final int fifthPrize;
-    private final int totalPrize;
-
-    private WinningDetail(int firstPrize, int secondPrize, int thirdPrize, int fourthPrize, int fifthPrize, int totalPrize) {
-        this.firstPrize = firstPrize;
-        this.secondPrize = secondPrize;
-        this.thirdPrize = thirdPrize;
-        this.fourthPrize = fourthPrize;
-        this.fifthPrize = fifthPrize;
-        this.totalPrize = totalPrize;
+    private WinningDetail(Map<LottoResult, Integer> lottoResultIntegerMap) {
+        this.lottoResults = new EnumMap<>(lottoResultIntegerMap);
     }
 
     public static WinningDetail from(List<LottoResult> lottoResults) {
-        int firstPrize = (int) lottoResults.stream().filter(lottoResult -> LottoResult.FIRST_PRIZE == lottoResult).count();
-        int secondPrize = (int) lottoResults.stream().filter(lottoResult -> LottoResult.SECOND_PRIZE == lottoResult).count();
-        int thirdPrize = (int) lottoResults.stream().filter(lottoResult -> LottoResult.THIRD_PRIZE == lottoResult).count();
-        int fourthPrize = (int) lottoResults.stream().filter(lottoResult -> LottoResult.FOURTH_PRIZE == lottoResult).count();
-        int fifthPrize = (int) lottoResults.stream().filter(lottoResult -> LottoResult.FIFTH_PRIZE == lottoResult).count();
-        int totalPrize = lottoResults.stream().mapToInt(LottoResult::getPrize).sum();
-        return new WinningDetail(firstPrize, secondPrize, thirdPrize, fourthPrize, fifthPrize, totalPrize);
+        Map<LottoResult, Integer> lottoResultMap = getLottoResultMap();
+        lottoResults.forEach(lottoResult -> lottoResultMap.computeIfPresent(lottoResult, (key, value) -> value + 1));
+        return new WinningDetail(lottoResultMap);
     }
 
     public String getResult() {
@@ -43,7 +27,10 @@ public class WinningDetail {
         return detail.toString();
     }
 
-    public int getTotalPrize() {
-        return totalPrize;
+    private static Map<LottoResult, Integer> getLottoResultMap() {
+        Map<LottoResult, Integer> lottoResultCounts = new EnumMap<>(LottoResult.class);
+        Arrays.stream(LottoResult.values())
+                .forEach(lottoResult -> lottoResultCounts.put(lottoResult, 0));
+        return lottoResultCounts;
     }
 }
