@@ -26,16 +26,12 @@ public class Lotto {
         return new Lotto(lottoGenerator.issue(MIN_VALUE, MAX_VALUE, THE_NUMBER_OF_LOTTO));
     }
 
-    public void validateDuplication(int bonusNumber) {
-        if (numbers.contains(bonusNumber)) {
-            throw new IllegalArgumentException(String.format("[ERROR] %d는 당첨 번호와 중복됩니다.", bonusNumber));
-        }
+    public boolean isNotInRange(int number) {
+        return number < MIN_VALUE || number > MAX_VALUE;
     }
 
-    public void validateRange(int number) {
-        if (isNotInRange(number)) {
-            throw new IllegalArgumentException(String.format("[ERROR] 로또 번호는 %d부터 %d 사이의 숫자여야 합니다.", MIN_VALUE, MAX_VALUE));
-        }
+    public boolean has(int number) {
+        return numbers.contains(number);
     }
 
     public LottoResult getResult(Lotto other, int bonusNumber) {
@@ -60,10 +56,6 @@ public class Lotto {
 
     private boolean hasNumberOutOfRange(List<Integer> numbers) {
         return numbers.stream().anyMatch(this::isNotInRange);
-    }
-
-    private boolean isNotInRange(int number) {
-        return number < MIN_VALUE || number > MAX_VALUE;
     }
 
     private void validateDuplication(List<Integer> numbers) {
