@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static lotto.view.Input.insertManualLottoNumbers;
+import static lotto.view.Output.printInsertManualLottoNumbersRequest;
 
 public class LottoMachine {
     private final LottoFactory lottoFactory = new LottoFactory();
@@ -17,6 +18,7 @@ public class LottoMachine {
 
     private List<Lotto> createManualLottos(int manualLottoCount) {
         List<Lotto> manualLottos = new ArrayList<>();
+        printInsertManualLottoNumbersRequest();
         for (int i = 0; i < manualLottoCount; i++) {
             List<Integer> numbers = insertManualLottoNumbers();
             Lotto manualLotto = lottoFactory.createManualLotto(numbers);

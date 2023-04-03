@@ -10,7 +10,6 @@ import static java.lang.Integer.parseInt;
 public class Input {
     private static final String MONEY_REQUEST = "구입금액을 입력해 주세요.";
     private static final String MANUAL_LOTTO_COUNT_REQUEST = "수동으로 구매할 로또 수를 입력해 주세요.";
-    private static final String MANUAL_LOTTO_NUMBERS_REQUEST = "수동으로 구매할 번호를 입력해 주세요.";
     private static final String INPUT_IS_NOT_NUMBER = "문자열이 아닌 숫자(정수)를 입력해주세요.";
     private static final String DUPLICATE_MANUAL_LOTTO_NUMBERS = "수동 로또 번호 중 중복된 번호가 있습니다.";
 
@@ -29,9 +28,8 @@ public class Input {
     }
 
     public static List<Integer> insertManualLottoNumbers() {
-        System.out.println(MANUAL_LOTTO_NUMBERS_REQUEST);
         String manualLottoNumbersInput = Console.readLine();
-        List<String> manualLottoNumbers = new ArrayList<>(Arrays.asList(manualLottoNumbersInput.trim().split(",")));
+        List<String> manualLottoNumbers = Arrays.asList(manualLottoNumbersInput.split("\\s*,\\s*"));
         validateManualLottoNumbers(manualLottoNumbers);
 
         return manualLottoNumbers.stream()
