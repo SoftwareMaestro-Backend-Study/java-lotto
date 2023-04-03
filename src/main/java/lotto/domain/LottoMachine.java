@@ -10,7 +10,7 @@ public class LottoMachine {
     private final LottoFactory lottoFactory = new LottoFactory();
     public Lottos createLottos(LottoMoney money, int manualLottoCount) {
         List<Lotto> manualLottos = createManualLottos(manualLottoCount);
-        // List<Lotto> autoLottos = createAutoLottos(money.getTotalLottoCount() - manualLottos.size());
+        List<Lotto> autoLottos = createAutoLottos(money.getTotalLottoCount() - manualLottos.size());
 
 
     }
@@ -22,14 +22,18 @@ public class LottoMachine {
             Lotto manualLotto = lottoFactory.createManualLotto(numbers);
             manualLottos.add(manualLotto);
         }
+
         return manualLottos;
     }
 
-//    private List<Lotto> createAutoLottos(int autoLottoCount) {
-//        List<Lotto> autoLottos = new ArrayList<>();
-//        for (int i = 0; i < autoLottoCount; i++) {
-//            List<Integer> numbers =
-//        }
-//    }
+    private List<Lotto> createAutoLottos(int autoLottoCount) {
+        List<Lotto> autoLottos = new ArrayList<>();
+        for (int i = 0; i < autoLottoCount; i++) {
+            Lotto autoLotto = lottoFactory.createAutoLotto();
+            autoLottos.add(autoLotto);
+        }
+
+        return autoLottos;
+    }
 
 }

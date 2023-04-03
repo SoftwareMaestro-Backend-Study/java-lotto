@@ -23,4 +23,8 @@ public class LottoMoney {
     public int getPrice() {
         return price;
     }
+
+    public int getTotalLottoCount() {
+        return price % LOTTO_PRICE_UNIT;
+    }
 }
