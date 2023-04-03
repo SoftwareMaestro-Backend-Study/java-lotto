@@ -17,4 +17,16 @@ public class Lottos {
         this.manualLottoCount = manualLottos.size();
         this.autoLottoCount = autoLottos.size();
     }
+
+    public int getManualLottoCount() {
+        return manualLottoCount;
+    }
+
+    public int getAutoLottoCount() {
+        return autoLottoCount;
+    }
+
+    public List<Lotto> getLottos() {
+        return lottos;
+    }
 }
