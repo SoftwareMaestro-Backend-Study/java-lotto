@@ -11,11 +11,8 @@ public class PurchaseService {
      * 텍스트 입력을 lotto 수로 변환
      */
     public static int getLottoNum(int cost) {
-        if (cost <=0 )
-            throw new IllegalArgumentException("[ERROR] 1 이상의 양수를 입력해주세요");
-        if (cost % PRICE_PER_LOTTO != 0)
-            throw new IllegalArgumentException("[ERROR] 가격의 배수에 해당하는 가격을 입력해주세요");
-
+        validatePositiveNum(cost);
+        validateDivisible(cost);
         return cost / PRICE_PER_LOTTO;
     }
 
@@ -26,5 +23,13 @@ public class PurchaseService {
         return (double) reward / (num * PRICE_PER_LOTTO) * 100;
     }
 
+    private static void validatePositiveNum(int num) {
+        if (num <=0 )
+            throw new IllegalArgumentException("[ERROR] 1 이상의 양수를 입력해주세요");
+    }
 
+    private static void validateDivisible(int num) {
+        if (num % PRICE_PER_LOTTO != 0)
+            throw new IllegalArgumentException("[ERROR] 가격의 배수에 해당하는 가격을 입력해주세요");
+    }
 }
