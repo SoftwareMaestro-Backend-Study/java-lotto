@@ -23,4 +23,8 @@ public class Money {
     public int remainCount(int lottoCount) {
         return this.value / LOTTO_AMOUNT - lottoCount;
     }
+
+    public double getProfitRate(int profit) {
+        return (double) profit / this.value;
+    }
 }

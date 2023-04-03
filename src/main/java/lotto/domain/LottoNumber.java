@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import lotto.domain.picker.Picker;
 
-public class LottoNumber {
+public class LottoNumber implements Comparable<LottoNumber> {
     private static final int MIN_VALUE = 1;
     private static final int MAX_VALUE = 45;
     private static final List<LottoNumber> VALUES;
@@ -53,5 +53,15 @@ public class LottoNumber {
     @Override
     public int hashCode() {
         return Objects.hash(value);
+    }
+
+    @Override
+    public int compareTo(LottoNumber o) {
+        return this.value - o.value;
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(value);
     }
 }

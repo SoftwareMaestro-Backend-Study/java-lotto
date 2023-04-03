@@ -36,6 +36,13 @@ public enum LottoRank {
 
     @Override
     public String toString() {
-        return String.format("%d개 일치%s (%,d원)", this.count, this.bonus ? ", 보너스 볼 일치" : "", this.prize);
+        if (this.bonus) {
+            return String.format("%d개 일치, 보너스 볼 일치 (%,d원)", this.count, this.prize);
+        }
+        return String.format("%d개 일치 (%,d원)", this.count, this.prize);
+    }
+
+    public boolean isNotOtherRank() {
+        return this != OTHER;
     }
 }

@@ -19,4 +19,17 @@ public class Ticket {
 
         return new Ticket(lottos);
     }
+
+    public List<LottoRank> getResults(WinningLotto winningLotto) {
+        return this.lottos.stream()
+                .map(lotto -> LottoRank.calculateRank(winningLotto, lotto))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public String toString() {
+        return this.lottos.stream()
+                .map(Lotto::toString)
+                .collect(Collectors.joining("\n"));
+    }
 }

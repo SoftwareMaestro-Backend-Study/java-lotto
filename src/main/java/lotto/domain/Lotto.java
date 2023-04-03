@@ -1,6 +1,7 @@
 package lotto.domain;
 
 import java.util.Set;
+import java.util.stream.Collectors;
 import lotto.domain.lottocreator.LottoCreator;
 
 public class Lotto {
@@ -32,5 +33,13 @@ public class Lotto {
 
     public boolean contains(LottoNumber bonusBall) {
         return this.numbers.contains(bonusBall);
+    }
+
+    @Override
+    public String toString() {
+        return this.numbers.stream()
+                .sorted()
+                .collect(Collectors.toList())
+                .toString();
     }
 }

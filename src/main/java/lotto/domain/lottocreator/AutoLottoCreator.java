@@ -6,7 +6,7 @@ import java.util.stream.Stream;
 import lotto.domain.LottoNumber;
 import lotto.domain.picker.Picker;
 
-public class AutoLottoCreator implements LottoCreator{
+public class AutoLottoCreator implements LottoCreator {
 
     private final Picker picker;
 
