@@ -3,8 +3,10 @@ package lotto;
 import java.util.List;
 import java.util.stream.Collectors;
 import lotto.domain.Lotto;
+import lotto.domain.LottoNumber;
 import lotto.domain.Money;
 import lotto.domain.Ticket;
+import lotto.domain.WinningLotto;
 import lotto.domain.lottocreator.AutoLottoCreator;
 import lotto.domain.lottocreator.ManualLottoCreator;
 import lotto.domain.picker.RandomPicker;
@@ -21,6 +23,10 @@ public class Application {
 
         final int autoLottoCount = money.remainCount(manualLottoCount);
         final Ticket autoTicket = Ticket.of(new AutoLottoCreator(new RandomPicker()), autoLottoCount);
+
+        final Lotto lotto = Lotto.create(new ManualLottoCreator(Input.getWinningLotto()));
+        final LottoNumber bonusBall = LottoNumber.from(Input.getBonusBall());
+        WinningLotto winningLotto = new WinningLotto(lotto, bonusBall);
 
 
     }

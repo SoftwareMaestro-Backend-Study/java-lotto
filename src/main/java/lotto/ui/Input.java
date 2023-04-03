@@ -40,4 +40,18 @@ public class Input {
                 .collect(Collectors.toList());
     }
 
+    public static List<Integer> getWinningLotto() {
+        System.out.println("지난 주 당첨 번호를 입력해 주세요.");
+        final String input = Console.readLine();
+
+        return Arrays.stream(input.split(DELIMITER))
+                .map(Input::getAnInt)
+                .collect(Collectors.toList());
+    }
+
+    public static int getBonusBall() {
+        System.out.println("보너스 볼을 입력해 주세요.");
+        final String input = Console.readLine();
+        return getAnInt(input);
+    }
 }

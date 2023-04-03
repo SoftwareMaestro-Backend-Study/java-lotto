@@ -9,9 +9,13 @@ public class Lotto {
 
     private final Set<LottoNumber> numbers;
 
-    public Lotto(Set<LottoNumber> numbers) {
+    private Lotto(Set<LottoNumber> numbers) {
         validateLength(numbers);
         this.numbers = numbers;
+    }
+
+    public static Lotto create(LottoCreator creator) {
+        return new Lotto(creator.create(LOTTO_SIZE));
     }
 
     private void validateLength(Set<LottoNumber> numbers) {
@@ -20,7 +24,13 @@ public class Lotto {
         }
     }
 
-    public static Lotto create(LottoCreator creator) {
-        return new Lotto(creator.create(LOTTO_SIZE));
+    public int calculateSameLottoNumber(Lotto other) {
+        return (int) other.numbers.stream()
+                .filter(this::contains)
+                .count();
+    }
+
+    public boolean contains(LottoNumber bonusBall) {
+        return this.numbers.contains(bonusBall);
     }
 }
