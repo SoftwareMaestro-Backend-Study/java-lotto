@@ -17,9 +17,10 @@ import java.util.stream.Stream;
 public class LottoService {
 
     public void run() {
-        LottoBundle bundle = new LottoBundle();
+        LottoBundle.Builder lottoBundleBuilder = new LottoBundle.Builder();
 
         // 구입금액 입력받기
+        // todo : 구입금액 객체 관리
         int lottoNum = PurchaseService.getLottoNum(getNum(UserInput.getCostInput()));
         int manualNum = getNum(UserInput.getManualNumInput());
         if (lottoNum < manualNum)
@@ -36,7 +37,8 @@ public class LottoService {
                 creators.add(ManualLottoCreator.from(getNumList(input)));
         }
 
-        bundle.createLottos(creators);
+        lottoBundleBuilder.createLottos(creators);
+        LottoBundle bundle = lottoBundleBuilder.build();
 
         // 로또 출력하기
         UserOutput.printLottos(
@@ -45,11 +47,12 @@ public class LottoService {
                 ));
 
         // 당첨번호 입력받기
-        bundle.setWinningLotto(
+        lottoBundleBuilder.winningLotto(
                 ManualLottoCreator.from(getNumList(UserInput.getLottoInput())));
 
         // 보너스번호 입력받기
-        bundle.setBonus(getNum(UserInput.getBonusInput()));
+        lottoBundleBuilder.bonus(getNum(UserInput.getBonusInput()));
+        bundle = lottoBundleBuilder.build();
 
         // 당첨 통계 출력하기
         UserOutput.printResult(bundle.getResultStatus());
@@ -57,13 +60,11 @@ public class LottoService {
 
 
     public int getNum(String input) {
-        int num;
         try {
-            num = Integer.parseInt(input);
+            return Integer.parseInt(input);
         } catch (NumberFormatException ne) {
             throw new IllegalArgumentException("[ERROR] 정수를 입력해주세요.");
         }
-        return num;
     }
 
     public List<Integer> getNumList(String input) {

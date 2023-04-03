@@ -9,36 +9,64 @@ import java.util.List;
 import java.util.Map;
 
 public class LottoBundle {
-    private List<Lotto> lottos = new ArrayList<>();
-    private Lotto winningLotto;
-    private int bonus;
+    private final List<Lotto> lottos;
+    private final Lotto winningLotto;
+    private final int bonus;
 
-    /**
-     * lottoCreators만큼 새로운 로또 생성하기
-     */
-    public void createLottos(List<LottoCreator> lottoCreators) {
-        for (LottoCreator creator : lottoCreators) {
+    private LottoBundle(Builder builder) {
+        this.lottos = builder.lottos;
+        this.winningLotto = builder.winningLotto;
+        this.bonus = builder.bonus;
+    }
+
+    public static class Builder {
+        private List<Lotto> lottos = new ArrayList<>();
+        private Lotto winningLotto;
+        private Integer bonus;
+
+        public Builder() {}
+
+        /**
+         * lottoCreators만큼 새로운 로또 생성하기
+         */
+        public Builder createLottos(List<LottoCreator> lottoCreators) {
+            for (LottoCreator creator : lottoCreators) {
+                Lotto lotto = Lotto.from(creator);
+                lottos.add(lotto);
+            }
+            return this;
+        }
+
+        /**
+         * 당첨번호 저장하기
+         */
+        public Builder winningLotto(LottoCreator creator) {
             Lotto lotto = Lotto.from(creator);
-            lottos.add(lotto);
+            this.winningLotto = lotto;
+            if (bonus != null)
+                validateBonusNumber(winningLotto.getNumbers(), bonus);
+            return this;
         }
-    }
 
-    /**
-     * 당첨번호 저장하기
-     */
-    public void setWinningLotto(LottoCreator creator) {
-        Lotto lotto = Lotto.from(creator);
-        this.winningLotto = lotto;
-    }
-
-    /**
-     * 보너스번호 저장하기
-     */
-    public void setBonus(int bonus) {
-        if (winningLotto.contains(bonus)) {
-            throw new IllegalArgumentException("[ERROR] 보너스 번호와 당첨 번호에 중복이 있습니다.");
+        /**
+         * 보너스번호 저장하기
+         */
+        public Builder bonus(int bonus) {
+            //todo : bonus 객체화하
+            this.bonus = bonus;
+            if (winningLotto != null)
+                validateBonusNumber(winningLotto.getNumbers(), bonus);
+            return this;
         }
-        this.bonus = bonus;
+
+        private void validateBonusNumber(List<Integer> numbers, int num){
+            if (numbers.contains(num))
+                throw new IllegalArgumentException("[ERROR] 보너스 번호와 당첨 번호에 중복이 있습니다.");
+        }
+
+        public LottoBundle build() {
+            return new LottoBundle(this);
+        }
     }
 
     /**
@@ -75,7 +103,7 @@ public class LottoBundle {
         return new StatusOutputModel(sb.toString());
     }
 
-    public Map<Prize, Integer> getPrizeStat() {
+    private Map<Prize, Integer> getPrizeStat() {
         Map<Prize, Integer> prizeMap = Prize.getInitializedMap();
         for (Lotto lotto : lottos) {
             Prize prize = lotto.comparePrize(winningLotto, bonus);
@@ -85,7 +113,7 @@ public class LottoBundle {
         return prizeMap;
     }
 
-    public int getTotalReward(Map<Prize, Integer> prizeMap) {
+    private int getTotalReward(Map<Prize, Integer> prizeMap) {
         int totalReward = 0;
         for (Prize prize : Prize.values()) {
             if (prizeMap.get(prize) != 0)
