@@ -6,6 +6,7 @@ import lotto.domain.Lottos;
 
 import static lotto.view.Input.insertLottoMoney;
 import static lotto.view.Input.insertManualLottoCount;
+import static lotto.view.Output.printErrorMessage;
 
 public class LottoController {
 
@@ -16,6 +17,7 @@ public class LottoController {
             LottoMoney money = new LottoMoney(insertLottoMoney());
             Lottos lottos = lottoMachine.createLottos(money, insertManualLottoCount());
         } catch (IllegalArgumentException error) {
+            printErrorMessage(error.getMessage());
         }
     }
 
