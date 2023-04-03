@@ -16,12 +16,12 @@ public class UserInput {
     }
 
     public static String getManualNumInput() {
-        System.out.println("수동으로 구매할 로또 수를 입력해 주세요.");
+        System.out.println("\n수동으로 구매할 로또 수를 입력해 주세요.");
         return Console.readLine().trim();
     }
 
     public static List<String> getManualLottoInput(int manualNum) {
-        System.out.println("수동으로 구매할 번호를 입력해 주세요.");
+        System.out.println("\n수동으로 구매할 번호를 입력해 주세요.");
         List<String> list = new ArrayList<>();
         for (int i = 0; i < manualNum; i++) {
             list.add(Console.readLine().trim());
@@ -29,12 +29,12 @@ public class UserInput {
         return list;
     }
 
-    public static String getLottoInput(){
+    public static String getLottoInput() {
         System.out.println("당첨 번호를 입력해 주세요.");
         return Console.readLine().trim();
     }
 
-    public static String getBonusInput(){
+    public static String getBonusInput() {
         System.out.println("보너스 번호를 입력해 주세요.");
         return Console.readLine().trim();
     }

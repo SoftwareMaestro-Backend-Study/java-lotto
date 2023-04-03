@@ -3,6 +3,7 @@ package lotto.lotto;
 import lotto.lotto.lottoCreator.LottoCreator;
 import lotto.lotto.lottoCreator.ManualLottoCreator;
 import lotto.lotto.lottoCreator.RandomLottoCreator;
+import lotto.lotto.model.LottoOutputModel;
 import lotto.purchase.PurchaseService;
 import lotto.view.UserInput;
 import lotto.view.UserOutput;
@@ -21,12 +22,14 @@ public class LottoService {
         // 구입금액 입력받기
         int lottoNum = PurchaseService.getLottoNum(getNum(UserInput.getCostInput()));
         int manualNum = getNum(UserInput.getManualNumInput());
-
         if (lottoNum < manualNum)
             throw new IllegalArgumentException("[ERROR] 구입 가능한 로또 수를 초과하였습니다.");
+
+        // 자동 로또
         List<LottoCreator> creators = Stream.generate(RandomLottoCreator::from)
-                        .limit(lottoNum - manualNum)
-                        .collect(Collectors.toList());
+                .limit(lottoNum - manualNum)
+                .collect(Collectors.toList());
+        // 수동 로또
         if (manualNum != 0) {
             List<String> strList = UserInput.getManualLottoInput(manualNum);
             for (String input : strList)
@@ -36,15 +39,20 @@ public class LottoService {
         bundle.createLottos(creators);
 
         // 로또 출력하기
-        UserOutput.printLottos(bundle.getLottosInfo());
+        UserOutput.printLottos(
+                new LottoOutputModel(
+                        lottoNum - manualNum,
+                        manualNum,
+                        bundle.getLottosNumList()
+                ));
 
         // 당첨번호 입력받기
-        List<Integer> winningList = getNumList(UserInput.getLottoInput());
-        bundle.setWinningLotto(ManualLottoCreator.from(winningList));
+        bundle.setWinningLotto(
+                ManualLottoCreator.from(getNumList(UserInput.getLottoInput())
+                ));
 
         // 보너스번호 입력받기
-        int bonus = getNum(UserInput.getBonusInput());
-        bundle.setBonus(bonus);
+        bundle.setBonus(getNum(UserInput.getBonusInput()));
 
         // 당첨 통계 출력하기
         UserOutput.printResult(bundle.getResultStatus());
