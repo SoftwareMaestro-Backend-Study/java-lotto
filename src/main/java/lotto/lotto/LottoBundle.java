@@ -11,7 +11,7 @@ import java.util.Map;
 public class LottoBundle {
     private final List<Lotto> lottos;
     private final Lotto winningLotto;
-    private final int bonus;
+    private final Bonus bonus;
 
     private LottoBundle(Builder builder) {
         this.lottos = builder.lottos;
@@ -22,7 +22,8 @@ public class LottoBundle {
     public static class Builder {
         private List<Lotto> lottos = new ArrayList<>();
         private Lotto winningLotto;
-        private Integer bonus;
+        private Integer bonusNumber;
+        private Bonus bonus;
 
         public Builder() {}
 
@@ -43,19 +44,18 @@ public class LottoBundle {
         public Builder winningLotto(LottoCreator creator) {
             Lotto lotto = Lotto.from(creator);
             this.winningLotto = lotto;
-            if (bonus != null)
-                validateBonusNumber(winningLotto.getNumbers(), bonus);
+            if (bonusNumber != null)
+                bonus = Bonus.from(bonusNumber, winningLotto);
             return this;
         }
 
         /**
          * 보너스번호 저장하기
          */
-        public Builder bonus(int bonus) {
-            //todo : bonus 객체화하
-            this.bonus = bonus;
+        public Builder bonus(int bonusNumber) {
+            this.bonusNumber = bonusNumber;
             if (winningLotto != null)
-                validateBonusNumber(winningLotto.getNumbers(), bonus);
+                this.bonus = Bonus.from(bonusNumber, winningLotto);
             return this;
         }
 
@@ -106,7 +106,7 @@ public class LottoBundle {
     private Map<Prize, Integer> getPrizeStat() {
         Map<Prize, Integer> prizeMap = Prize.getInitializedMap();
         for (Lotto lotto : lottos) {
-            Prize prize = lotto.comparePrize(winningLotto, bonus);
+            Prize prize = lotto.comparePrize(winningLotto, bonus.getBonusNumber());
             if (prize.isPrized())
                 prizeMap.put(prize, prizeMap.get(prize) + 1);
         }

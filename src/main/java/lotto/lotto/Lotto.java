@@ -50,6 +50,11 @@ public class Lotto {
         return prize;
     }
 
+    public void validateBonusNumber(int bonus) {
+        validateBonusDuplicateWithLotto(bonus);
+        validateBonusRange(bonus);
+    }
+
     public boolean contains(int num) {
         return numbers.contains(num);
     }
@@ -61,5 +66,17 @@ public class Lotto {
 
     public List<Integer> getNumbers() {
         return numbers;
+    }
+
+
+    private void validateBonusDuplicateWithLotto(int bonus) {
+        if (numbers.contains(bonus))
+            throw new IllegalArgumentException("[ERROR] 보너스 번호와 당첨 번호에 중복이 있습니다.");
+
+    }
+
+    private void validateBonusRange(int bonus) {
+        if (bonus < LOTTO_MIN_NUM || bonus > LOTTO_MAX_NUM)
+            throw new IllegalArgumentException("[ERROR] 보너스 번호와 당첨 번호에 중복이 있습니다.");
     }
 }
