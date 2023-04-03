@@ -13,18 +13,6 @@ public class LottoBundle {
     private Lotto winningLotto;
     private int bonus;
 
-
-    /**
-     * lottoNum의 수만큼 새로운 로또 생성하기
-     */
-    // todo : deprecated
-    public void createLottos(int lottoNum) {
-        for (int i = 0; i < lottoNum; i++) {
-//            Lotto lotto = Lotto.newRandomLotto();
-//            lottos.add(lotto);
-        }
-    }
-
     /**
      * lottoNum의 수만큼 새로운 로또 생성하기
      */
@@ -33,15 +21,6 @@ public class LottoBundle {
             Lotto lotto = Lotto.from(creator);
             lottos.add(lotto);
         }
-    }
-
-    /**
-     * 당첨번호 저장하기
-     */
-    // todo : deprecated
-    public void setWinningLotto(List<Integer> winningNumList) {
-        Lotto lotto = new Lotto(winningNumList);
-        this.winningLotto = lotto;
     }
 
     /**
