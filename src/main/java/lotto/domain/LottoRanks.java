@@ -1,9 +1,10 @@
 package lotto.domain;
 
 import java.util.Arrays;
-import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class LottoRanks {
@@ -14,11 +15,9 @@ public class LottoRanks {
     }
 
     public static LottoRanks from(List<LottoRank> ranks) {
-        EnumMap<LottoRank, Integer> lottoRankMap = new EnumMap<>(LottoRank.class);
-        Arrays.stream(LottoRank.values()).forEach(rank -> lottoRankMap.put(rank, 0));
-
-        ranks.forEach(rank -> lottoRankMap.computeIfPresent(rank, (key, value) -> value + 1));
-        return new LottoRanks(lottoRankMap);
+        return new LottoRanks(
+                ranks.stream().collect(Collectors.groupingBy(Function.identity(), Collectors.summingInt(e -> 1)))
+        );
     }
 
     public int getProfit() {
@@ -30,9 +29,13 @@ public class LottoRanks {
 
     @Override
     public String toString() {
+        Arrays.stream(LottoRank.values())
+                .forEach(rank -> this.ranks.computeIfAbsent(rank, value -> 0));
+
         return ranks.entrySet()
                 .stream()
                 .filter(entry -> entry.getKey().isNotOtherRank())
+                .sorted(Entry.comparingByKey())
                 .map(entry -> String.format("%s - %d개", entry.getKey(), entry.getValue()))
                 .collect(Collectors.joining("\n"));
     }
