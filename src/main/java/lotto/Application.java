@@ -1,7 +1,41 @@
 package lotto;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import lotto.domain.Lotto;
+import lotto.domain.Money;
+import lotto.domain.Ticket;
+import lotto.domain.lottocreator.AutoLottoCreator;
+import lotto.domain.lottocreator.ManualLottoCreator;
+import lotto.domain.picker.RandomPicker;
+import lotto.ui.Input;
+
 public class Application {
     public static void main(String[] args) {
-        // TODO: 프로그램 구현
+        final Money money = new Money(Input.getMoneyValue());
+        final int manualLottoCount = Input.getManualLottoCount();
+        validateLottoCount(money, manualLottoCount);
+
+        final List<List<Integer>> manualLottos = Input.getManualLottos(manualLottoCount);
+        final Ticket manualTicket = getManualTicket(manualLottos);
+
+        final int autoLottoCount = money.remainCount(manualLottoCount);
+        final Ticket autoTicket = Ticket.of(new AutoLottoCreator(new RandomPicker()), autoLottoCount);
+
+
+    }
+
+    private static void validateLottoCount(Money money, int manualLottoCount) {
+        if (!money.canBuy(manualLottoCount)) {
+            throw new IllegalArgumentException(String.format("[ERROR] 로또를 %d개 구매할 수 없습니다.", manualLottoCount));
+        }
+    }
+
+    private static Ticket getManualTicket(List<List<Integer>> manualLottos) {
+        return new Ticket(
+                manualLottos.stream()
+                        .map(lotto -> Lotto.create(new ManualLottoCreator(lotto)))
+                        .collect(Collectors.toList())
+        );
     }
 }
