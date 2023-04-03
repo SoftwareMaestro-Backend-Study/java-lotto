@@ -1,13 +1,12 @@
 package lotto.lotto;
 
 import lotto.lotto.lottoCreator.LottoCreator;
-import lotto.lotto.model.LottoOutputModel;
 import lotto.lotto.model.StatusOutputModel;
 import lotto.purchase.PurchaseService;
-import lotto.view.UserOutput;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class LottoBundle {
     private List<Lotto> lottos = new ArrayList<>();
@@ -66,19 +65,19 @@ public class LottoBundle {
     /**
      * 로또 출력하기
      */
-    public LottoOutputModel getLottosInfo() {
+    public List<List<Integer>> getLottosNumList() {
         List<List<Integer>> lottoNumbers = new ArrayList<>();
         for (Lotto lotto : lottos)
             lottoNumbers.add(lotto.getNumbers());
-        return new LottoOutputModel(lottos.size(), lottoNumbers);
+        return lottoNumbers;
     }
 
     /**
      * 당첨 통계 출력하기
      */
     public StatusOutputModel getResultStatus() {
-        int[] prizeStat = getPrizeStat();
-        int totalreward = getTotalReward(prizeStat);
+        Map<Prize, Integer> prizeMap = getPrizeStat();
+        int totalreward = getTotalReward(prizeMap);
         double rewardPercent = PurchaseService.getRewardPercent(lottos.size(), totalreward);
 
         StringBuilder sb = new StringBuilder();
@@ -88,7 +87,7 @@ public class LottoBundle {
             sb.append(
                     String.format(" (%,d원) - %d개",
                             prize.getReward(),
-                            prizeStat[prize.ordinal()]
+                            prizeMap.get(prize)
                     ));
             sb.append("\n");
         }
@@ -97,21 +96,21 @@ public class LottoBundle {
         return new StatusOutputModel(sb.toString());
     }
 
-    public int[] getPrizeStat() {
-        int[] prizeStat = new int[Prize.values().length];
+    public Map<Prize, Integer> getPrizeStat() {
+        Map<Prize, Integer> prizeMap = Prize.getInitializedMap();
         for (Lotto lotto : lottos) {
             Prize prize = lotto.comparePrize(winningLotto, bonus);
             if (prize.isPrized())
-                prizeStat[prize.ordinal()]++;
+                prizeMap.put(prize, prizeMap.get(prize) + 1);
         }
-        return prizeStat;
+        return prizeMap;
     }
 
-    public int getTotalReward(int[] prizeStat) {
+    public int getTotalReward(Map<Prize, Integer> prizeMap) {
         int totalReward = 0;
         for (Prize prize : Prize.values()) {
-            if (prizeStat[prize.ordinal()] != 0)
-                totalReward += prize.getReward() * prizeStat[prize.ordinal()];
+            if (prizeMap.get(prize) != 0)
+                totalReward += prize.getReward() * prizeMap.get(prize);
         }
         return totalReward;
     }

@@ -1,5 +1,8 @@
 package lotto.lotto;
 
+import java.util.EnumMap;
+import java.util.Map;
+
 public enum Prize {
     FIFTH(true, 5, 3, false, 5000, "3개 일치"),
     FOURTH(true, 4, 4, false, 50000, "4개 일치"),
@@ -22,6 +25,14 @@ public enum Prize {
         this.bonus = bonus;
         this.reward = reward;
         this.toString = toString;
+    }
+
+    public static Map<Prize, Integer> getInitializedMap() {
+        Map<Prize, Integer> prizeMap = new EnumMap<Prize, Integer>(Prize.class);
+        for( Prize key : Prize.values() ){
+            prizeMap.put(key, 0);
+        }
+        return prizeMap;
     }
 
     public boolean isPrized() {
