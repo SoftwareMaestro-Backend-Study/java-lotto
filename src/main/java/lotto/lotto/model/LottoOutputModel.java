@@ -3,16 +3,22 @@ package lotto.lotto.model;
 import java.util.List;
 
 public class LottoOutputModel {
-    private final int lottoCount;
+    private final int autoCount;
+    private final int manualCount;
     private final List<List<Integer>> lottoNumbers;
 
-    public LottoOutputModel(int lottoCount, List<List<Integer>> lottoNumbers) {
-        this.lottoCount = lottoCount;
+    public LottoOutputModel(int lottoCount, int manualCount, List<List<Integer>> lottoNumbers) {
+        this.autoCount = lottoCount;
+        this.manualCount = manualCount;
         this.lottoNumbers = lottoNumbers;
     }
 
-    public int getLottoCount() {
-        return lottoCount;
+    public int getAutoCount() {
+        return autoCount;
+    }
+
+    public int getManualCount() {
+        return manualCount;
     }
 
     public List<List<Integer>> getLottoNumbers() {
