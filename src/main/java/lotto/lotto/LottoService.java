@@ -1,5 +1,6 @@
 package lotto.lotto;
 
+import lotto.lotto.lottoCreator.LottoCreator;
 import lotto.lotto.lottoCreator.ManualLottoCreator;
 import lotto.lotto.lottoCreator.RandomLottoCreator;
 import lotto.purchase.PurchaseService;
@@ -18,13 +19,21 @@ public class LottoService {
         LottoBundle bundle = new LottoBundle();
 
         // 구입금액 입력받기
-        int cost = getNum(UserInput.getCostInput());
-        int lottoNum = PurchaseService.getLottoNum(cost);
-        bundle.createLottos(
-                Stream.generate(RandomLottoCreator::from)
-                        .limit(lottoNum)
-                        .collect(Collectors.toList())
-        );
+        int lottoNum = PurchaseService.getLottoNum(getNum(UserInput.getCostInput()));
+        int manualNum = getNum(UserInput.getManualNumInput());
+
+        if (lottoNum < manualNum)
+            throw new IllegalArgumentException("[ERROR] 구입 가능한 로또 수를 초과하였습니다.");
+        List<LottoCreator> creators = Stream.generate(RandomLottoCreator::from)
+                        .limit(lottoNum - manualNum)
+                        .collect(Collectors.toList());
+        if (manualNum != 0) {
+            List<String> strList = UserInput.getManualLottoInput(manualNum);
+            for (String input : strList)
+                creators.add(ManualLottoCreator.from(getNumList(input)));
+        }
+
+        bundle.createLottos(creators);
 
         // 로또 출력하기
         UserOutput.printLottos(bundle.getLottosInfo());
