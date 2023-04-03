@@ -17,13 +17,6 @@ public class Lotto {
     private final List<Integer> numbers;
 
     public Lotto(List<Integer> numbers) {
-        validate(numbers);
-
-        try {
-            numbers.sort(Comparator.naturalOrder());
-        } catch (UnsupportedOperationException ignored) {
-        }
-
         this.numbers = numbers;
     }
 
@@ -33,13 +26,6 @@ public class Lotto {
                 LOTTO_MAX_NUM,
                 LOTTO_NUM_LENGTH
         );
-    }
-
-    private void validate(List<Integer> numbers) {
-        if (numbers.size() != LOTTO_NUM_LENGTH)
-            throw new IllegalArgumentException("[ERROR] 숫자의 개수가 올바르지 않습니다.");
-        if (numbers.size() != (new HashSet<>(numbers)).size())
-            throw new IllegalArgumentException("[ERROR] 숫자에 중복이 없어야 합니다.");
     }
 
     public Prize comparePrize(Lotto winningLotto, int bonus) {
