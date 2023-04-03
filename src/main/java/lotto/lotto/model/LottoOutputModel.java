@@ -7,8 +7,8 @@ public class LottoOutputModel {
     private final int manualCount;
     private final List<List<Integer>> lottoNumbers;
 
-    public LottoOutputModel(int lottoCount, int manualCount, List<List<Integer>> lottoNumbers) {
-        this.autoCount = lottoCount;
+    public LottoOutputModel(int autoCount, int manualCount, List<List<Integer>> lottoNumbers) {
+        this.autoCount = autoCount;
         this.manualCount = manualCount;
         this.lottoNumbers = lottoNumbers;
     }

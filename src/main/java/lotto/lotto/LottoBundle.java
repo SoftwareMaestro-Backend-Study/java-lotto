@@ -14,7 +14,7 @@ public class LottoBundle {
     private int bonus;
 
     /**
-     * lottoNum의 수만큼 새로운 로또 생성하기
+     * lottoCreators만큼 새로운 로또 생성하기
      */
     public void createLottos(List<LottoCreator> lottoCreators) {
         for (LottoCreator creator : lottoCreators) {

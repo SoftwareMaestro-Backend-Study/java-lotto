@@ -41,15 +41,12 @@ public class LottoService {
         // 로또 출력하기
         UserOutput.printLottos(
                 new LottoOutputModel(
-                        lottoNum - manualNum,
-                        manualNum,
-                        bundle.getLottosNumList()
+                        lottoNum - manualNum, manualNum, bundle.getLottosNumList()
                 ));
 
         // 당첨번호 입력받기
         bundle.setWinningLotto(
-                ManualLottoCreator.from(getNumList(UserInput.getLottoInput())
-                ));
+                ManualLottoCreator.from(getNumList(UserInput.getLottoInput())));
 
         // 보너스번호 입력받기
         bundle.setBonus(getNum(UserInput.getBonusInput()));
