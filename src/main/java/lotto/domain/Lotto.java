@@ -28,4 +28,8 @@ public class Lotto {
     public List<Integer> getNumbers() {
         return this.numbers;
     }
+
+    public boolean checkContainWinningNumber(Integer winningNumber) {
+        return numbers.contains(winningNumber);
+    }
 }

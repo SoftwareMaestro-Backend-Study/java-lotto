@@ -1,9 +1,12 @@
 package lotto.domain;
 
 import lotto.domain.enumeration.NumberType;
+import lotto.domain.enumeration.Ranking;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static lotto.view.Input.insertLottoNumbers;
 import static lotto.view.Output.printInsertManualLottoNumbersRequest;
@@ -53,7 +56,7 @@ public class LottoMachine {
 
     private List<WinningNumber> createNormalWinningNumbers(List<Integer> normalNumbers) {
         List<WinningNumber> result = new ArrayList<>();
-        for(Integer number : normalNumbers) {
+        for (Integer number : normalNumbers) {
             WinningNumber normalNumber = new WinningNumber(number, NumberType.NORMAL);
             result.add(normalNumber);
         }
@@ -62,5 +65,39 @@ public class LottoMachine {
 
     private WinningNumber createBonusNumber(Integer bonusNumber) {
         return new WinningNumber(bonusNumber, NumberType.BOUNS);
+    }
+
+    public LottoResult computeLottoResult(Lottos lottos, List<WinningNumber> winningNumbers) {
+        Map<Ranking, Integer> winningInfo = new HashMap<>();
+
+        for (Lotto lotto : lottos.getLottos()) {
+            Ranking ranking = determineRanking(lotto, winningNumbers);
+            winningInfo.put(ranking, winningInfo.getOrDefault(ranking, 0) + 1);
+        }
+        return new LottoResult(winningInfo);
+    }
+
+    private Ranking determineRanking(Lotto lotto, List<WinningNumber> winningNumbers) {
+        int equalNormalNumberCount = getEqualCount(lotto, winningNumbers);
+        boolean isBonusEqual = checkBonusEqual(lotto, winningNumbers);
+
+        return Ranking.create(equalNormalNumberCount, isBonusEqual);
+    }
+
+    private int getEqualCount(Lotto lotto, List<WinningNumber> winningNumbers) {
+        return (int) winningNumbers.stream()
+                .map(WinningNumber::getNumber)
+                .filter(lotto::checkContainWinningNumber)
+                .count();
+    }
+
+    private boolean checkBonusEqual(Lotto lotto, List<WinningNumber> winningNumbers) {
+        return lotto.getNumbers()
+                .contains(
+                        winningNumbers.stream()
+                                .filter(WinningNumber::isBonus)
+                                .map(WinningNumber::getNumber)
+                                .findFirst().get()
+                );
     }
 }

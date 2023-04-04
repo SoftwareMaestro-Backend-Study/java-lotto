@@ -1,12 +1,16 @@
 package lotto.view;
 
 import lotto.domain.Lotto;
+import lotto.domain.LottoResult;
 import lotto.domain.Lottos;
+import lotto.domain.WinningNumber;
 
 import java.util.List;
 
 public class Output {
     private static final String MANUAL_LOTTO_NUMBERS_REQUEST = "수동으로 구매할 번호를 입력해 주세요.";
+    private static final String RESULT_ANNOUNCEMENT = "당첨 통계";
+    private static final String RESULT_ANNOUNCEMENT_LINE = "---------";
 
     public static void printErrorMessage(String errorMessage) {
         System.out.println("[ERROR] " + errorMessage);
@@ -33,5 +37,19 @@ public class Output {
         lottoList.stream()
                 .map(Lotto::getNumbers)
                 .forEach(System.out::println);
+    }
+
+    public static void printLottoResult(LottoResult lottoResult) {
+        printLottoResultStartFormat();
+        printLottoWinningResult(lottoResult);
+    }
+
+    private static void printLottoWinningResult(LottoResult lottoResult) {
+        // to do
+    }
+
+    private static void printLottoResultStartFormat() {
+        System.out.println(RESULT_ANNOUNCEMENT);
+        System.out.println(RESULT_ANNOUNCEMENT_LINE);
     }
 }

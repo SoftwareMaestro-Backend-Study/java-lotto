@@ -11,4 +11,12 @@ public class WinningNumber {
         this.type = type;
     }
 
+    public Integer getNumber() {
+        return number;
+    }
+
+    public boolean isBonus() {
+        return type == NumberType.BOUNS;
+    }
+
 }
