@@ -55,7 +55,7 @@ public class Output {
 
     private static void printProfit(LottoResult lottoResult, LottoMoney money) {
         Double profit = calculateProfit(lottoResult, money);
-        System.out.printf("총 수익률은 %.1f입니다.", profit);
+        System.out.printf("총 수익률은 %.2f입니다.", profit);
     }
 
     private static void printLottoWinningResult(LottoResult lottoResult) {
