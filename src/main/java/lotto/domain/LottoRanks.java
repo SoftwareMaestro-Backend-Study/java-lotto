@@ -1,9 +1,11 @@
 package lotto.domain;
 
 import java.util.Arrays;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.TreeMap;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -16,7 +18,7 @@ public class LottoRanks {
 
     public static LottoRanks from(List<LottoRank> ranks) {
         return new LottoRanks(
-                ranks.stream().collect(Collectors.groupingBy(Function.identity(), Collectors.summingInt(e -> 1)))
+                ranks.stream().collect(Collectors.toMap(Function.identity(), rank -> 1, Integer::sum))
         );
     }
 
