@@ -9,7 +9,11 @@ import static lotto.view.Output.*;
 
 public class LottoController {
 
-    private final LottoMachine lottoMachine = new LottoMachine();
+    private final LottoMachine lottoMachine;
+
+    public LottoController(LottoMachine lottoMachine) {
+        this.lottoMachine = lottoMachine;
+    }
 
     public void start() {
         try {
