@@ -13,7 +13,11 @@ import static lotto.view.Input.insertLottoNumbers;
 import static lotto.view.Output.printInsertManualLottoNumbersRequest;
 
 public class LottoMachine {
-    private final LottoFactory lottoFactory = new LottoFactory();
+    private final LottoFactory lottoFactory;
+
+    public LottoMachine(LottoFactory lottoFactory) {
+        this.lottoFactory = lottoFactory;
+    }
 
     public Lottos createLottos(LottoMoney money, int manualLottoCount) {
         List<Lotto> manualLottos = createManualLottos(manualLottoCount);
