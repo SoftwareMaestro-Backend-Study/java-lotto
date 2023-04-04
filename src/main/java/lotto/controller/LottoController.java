@@ -19,7 +19,7 @@ public class LottoController {
             List<WinningNumber> winningNumbers = lottoMachine
                     .createWinningNumbers(insertNormalWinningNumbers(), insertBonusWinningNumber());
             LottoResult lottoResult = lottoMachine.computeLottoResult(lottos, winningNumbers);
-            printLottoResult(lottoResult);
+            printLottoResult(lottoResult, money);
         } catch (IllegalArgumentException error) {
             printErrorMessage(error.getMessage());
         }

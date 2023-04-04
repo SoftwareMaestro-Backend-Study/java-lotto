@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static lotto.domain.enumeration.Ranking.*;
 import static lotto.view.Input.insertLottoNumbers;
 import static lotto.view.Output.printInsertManualLottoNumbersRequest;
 
@@ -99,5 +100,20 @@ public class LottoMachine {
                                 .map(WinningNumber::getNumber)
                                 .findFirst().get()
                 );
+    }
+
+    public static Double calculateProfit(LottoResult lottoResult, LottoMoney money) {
+        Map<Ranking, Integer> winningInfo = lottoResult.getWinningInfo();
+        Long value = sum(winningInfo);
+
+        return (double) value / (double) money.getPrice();
+    }
+
+    private static Long sum(Map<Ranking, Integer> winningInfo) {
+        return winningInfo.getOrDefault(FIFTH,0) * FIFTH.getPrizeMoney()
+                + winningInfo.getOrDefault(FORTH, 0) * FORTH.getPrizeMoney()
+                + winningInfo.getOrDefault(THIRD, 0) * THIRD.getPrizeMoney()
+                + winningInfo.getOrDefault(SECOND, 0) * SECOND.getPrizeMoney()
+                + winningInfo.getOrDefault(FIRST, 0) * FIRST.getPrizeMoney();
     }
 }
