@@ -11,7 +11,7 @@ public class Input {
     private static final String MONEY_REQUEST = "구입금액을 입력해 주세요.";
     private static final String MANUAL_LOTTO_COUNT_REQUEST = "수동으로 구매할 로또 수를 입력해 주세요.";
     private static final String INPUT_IS_NOT_NUMBER = "문자열이 아닌 숫자(정수)를 입력해주세요.";
-    private static final String DUPLICATE_MANUAL_LOTTO_NUMBERS = "수동 로또 번호 중 중복된 번호가 있습니다.";
+    private static final String DUPLICATE_LOTTO_NUMBERS = "로또 번호 중 중복된 번호가 있습니다.";
 
     public static int insertLottoMoney() {
         System.out.println(MONEY_REQUEST);
@@ -27,25 +27,25 @@ public class Input {
         return checkNumber(manualLottoCount);
     }
 
-    public static List<Integer> insertManualLottoNumbers() {
-        String manualLottoNumbersInput = Console.readLine();
-        List<String> manualLottoNumbers = Arrays.asList(manualLottoNumbersInput.split("\\s*,\\s*"));
-        validateManualLottoNumbers(manualLottoNumbers);
+    public static List<Integer> insertLottoNumbers() {
+        String lottoNumbersInput = Console.readLine();
+        List<String> lottoNumbers = Arrays.asList(lottoNumbersInput.split("\\s*,\\s*"));
+        validateLottoNumbers(lottoNumbers);
 
-        return manualLottoNumbers.stream()
+        return lottoNumbers.stream()
                 .map(Integer::parseInt)
                 .collect(Collectors.toList());
     }
 
-    private static void validateManualLottoNumbers(List<String> manualLottoNumbers) {
-        manualLottoNumbers.forEach(Input::checkNumber);
-        validateDuplicateManualLottoNumbers(manualLottoNumbers);
+    private static void validateLottoNumbers(List<String> lottoNumbers) {
+        lottoNumbers.forEach(Input::checkNumber);
+        validateDuplicateLottoNumbers(lottoNumbers);
     }
 
-    private static void validateDuplicateManualLottoNumbers(List<String> manualLottoNumbers) {
-        Set<String> uniqueManualLottoNumbers = new HashSet<>(manualLottoNumbers);
-        if (uniqueManualLottoNumbers.size() != manualLottoNumbers.size()) {
-            throw new IllegalArgumentException(DUPLICATE_MANUAL_LOTTO_NUMBERS);
+    private static void validateDuplicateLottoNumbers(List<String> lottoNumbers) {
+        Set<String> uniqueLottoNumbers = new HashSet<>(lottoNumbers);
+        if (uniqueLottoNumbers.size() != lottoNumbers.size()) {
+            throw new IllegalArgumentException(DUPLICATE_LOTTO_NUMBERS);
         }
     }
 
