@@ -3,7 +3,7 @@ package lotto.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-import static lotto.view.Input.insertManualLottoNumbers;
+import static lotto.view.Input.insertLottoNumbers;
 import static lotto.view.Output.printInsertManualLottoNumbersRequest;
 
 public class LottoMachine {
@@ -20,7 +20,7 @@ public class LottoMachine {
         List<Lotto> manualLottos = new ArrayList<>();
         printInsertManualLottoNumbersRequest();
         for (int i = 0; i < manualLottoCount; i++) {
-            List<Integer> numbers = insertManualLottoNumbers();
+            List<Integer> numbers = insertLottoNumbers();
             Lotto manualLotto = lottoFactory.createManualLotto(numbers);
             manualLottos.add(manualLotto);
         }
@@ -38,4 +38,27 @@ public class LottoMachine {
         return autoLottos;
     }
 
+    public List<WinningNumber> createWinningNumbers(List<Integer> normalNumbers, Integer bonusNumber) {
+        List<WinningNumber> totalWinningNumbers = new ArrayList<>();
+        List<WinningNumber> normalWinningNumbers = createNormalWinningNumbers(normalNumbers);
+        WinningNumber bonusWinningNumber = createBonusNumber(bonusNumber);
+
+        totalWinningNumbers.addAll(normalWinningNumbers);
+        totalWinningNumbers.add(bonusWinningNumber);
+
+        return totalWinningNumbers;
+    }
+
+    private List<WinningNumber> createNormalWinningNumbers(List<Integer> normalNumbers) {
+        List<WinningNumber> result = new ArrayList<>();
+        for(Integer number : normalNumbers) {
+            WinningNumber normalNumber = new WinningNumber(number, NumberType.NORMAL);
+            result.add(normalNumber);
+        }
+        return result;
+    }
+
+    private WinningNumber createBonusNumber(Integer bonusNumber) {
+        return new WinningNumber(bonusNumber, NumberType.BOUNS);
+    }
 }
